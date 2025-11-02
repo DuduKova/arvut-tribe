@@ -2,56 +2,246 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222.2 84% 4.9%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 222.2 84% 4.9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
+    /* Ayahuasca Design System - Color Palette */
+    
+    /* Base Colors - Ayahuasca Palette */
+    --earth-brown: 35 88% 16%;          /* Deep Earth Brown #4B2E05 */
+    --jungle-green: 139 34% 17%;        /* Jungle Green #1C3925 */
+    --ancient-gold: 42 44% 56%;         /* Ancient Gold #C1A35F */
+    --indigo-violet: 257 46% 28%;        /* Deep Indigo Violet #3A2769 */
+    --bordeaux-rose: 0 41% 39%;         /* Soft Bordeaux Rose #8C3B3B */
+    --warm-cream: 45 52% 91%;            /* Warm Cream #F4EEDC */
+    
+    /* Semantic Colors - Mapped to Ayahuasca Palette */
+    --background: 45 52% 91%;           /* Warm Cream - main background */
+    --foreground: 35 88% 16%;           /* Earth Brown - primary text */
+    --card: 45 55% 95%;                 /* Slightly lighter cream for cards */
+    --card-foreground: 35 88% 16%;      /* Earth Brown for card text */
+    --popover: 45 55% 97%;               /* Light cream for popovers */
+    --popover-foreground: 35 88% 16%;   /* Earth Brown for popover text */
+    
+    /* Primary - Gold and Green for buttons and key elements */
+    --primary: 42 44% 56%;               /* Ancient Gold */
+    --primary-foreground: 35 88% 16%;   /* Earth Brown for contrast */
+    
+    /* Secondary - Green for supporting elements */
+    --secondary: 139 34% 17%;            /* Jungle Green */
+    --secondary-foreground: 45 52% 91%;  /* Warm Cream for contrast */
+    
+    /* Muted - Earth tones for subtle backgrounds */
+    --muted: 35 30% 85%;                 /* Light earth tone */
+    --muted-foreground: 35 50% 30%;      /* Medium earth tone for text */
+    
+    /* Accent - Indigo or Bordeaux for special highlights */
+    --accent: 257 46% 28%;               /* Deep Indigo Violet */
+    --accent-foreground: 45 52% 91%;     /* Warm Cream for contrast */
+    
+    /* Destructive - Bordeaux for errors/removal */
+    --destructive: 0 41% 39%;            /* Soft Bordeaux Rose */
+    --destructive-foreground: 45 52% 91%; /* Warm Cream */
+    
+    /* UI Elements */
+    --border: 35 25% 70%;                /* Subtle earth brown border */
+    --input: 35 25% 85%;                 /* Light border for inputs */
+    --ring: 42 44% 56%;                  /* Gold ring for focus states */
     --radius: 0.5rem;
+    
+    /* Typography */
+    --line-height-body: 1.75;            /* Large line spacing for calm reading */
+    --line-height-heading: 1.4;           /* Tighter for headings */
+    --letter-spacing-normal: 0;
+    --letter-spacing-wide: 0.025em;      /* Gentle letter spacing for headings */
   }
 
+  /* Dark mode - deeper, more mystical feel */
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 84% 4.9%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 94.1%;
+    --background: 35 88% 8%;             /* Very dark earth */
+    --foreground: 45 52% 91%;            /* Warm Cream text */
+    --card: 35 88% 12%;                  /* Dark earth card */
+    --card-foreground: 45 52% 91%;       /* Warm Cream */
+    --popover: 35 88% 10%;               /* Dark popover */
+    --popover-foreground: 45 52% 91%;     /* Warm Cream */
+    --primary: 42 44% 56%;               /* Ancient Gold - remains vibrant */
+    --primary-foreground: 35 88% 12%;   /* Dark earth */
+    --secondary: 139 34% 20%;            /* Slightly lighter green */
+    --secondary-foreground: 45 52% 91%;  /* Warm Cream */
+    --muted: 35 30% 20%;                 /* Dark muted */
+    --muted-foreground: 45 30% 70%;       /* Muted cream */
+    --accent: 257 46% 35%;               /* Lighter indigo for visibility */
+    --accent-foreground: 45 52% 91%;     /* Warm Cream */
+    --destructive: 0 41% 45%;            /* Lighter bordeaux */
+    --destructive-foreground: 45 52% 91%; /* Warm Cream */
+    --border: 35 30% 25%;                /* Dark border */
+    --input: 35 30% 25%;                 /* Dark input border */
+    --ring: 42 44% 56%;                  /* Gold ring */
   }
 }
 
 @layer base {
   * {
-    @apply border-gray-200;
+    border-color: hsl(var(--earth-brown) / 0.2);
   }
+  
   body {
-    @apply bg-white text-gray-900;
+    background-color: hsl(var(--warm-cream));
+    color: hsl(var(--earth-brown));
+    font-family: var(--font-secondary), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-normal);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-primary), Georgia, serif;
+    line-height: var(--line-height-heading);
+    letter-spacing: var(--letter-spacing-wide);
+    font-weight: 600;
+  }
+  
+  /* Typography scale with large line spacing */
+  h1 {
+    font-size: 2.5rem;
+    line-height: 1.3;
+  }
+  
+  h2 {
+    font-size: 2rem;
+    line-height: 1.35;
+  }
+  
+  h3 {
+    font-size: 1.75rem;
+    line-height: 1.4;
+  }
+  
+  h4 {
+    font-size: 1.5rem;
+    line-height: 1.4;
+  }
+  
+  h5 {
+    font-size: 1.25rem;
+    line-height: 1.45;
+  }
+  
+  h6 {
+    font-size: 1.125rem;
+    line-height: 1.45;
+  }
+  
+  p, li, td, th {
+    line-height: var(--line-height-body);
+  }
+  
+  /* Interactive Elements - Links */
+  a {
+    transition: all 0.2s ease;
+    border-radius: var(--radius);
+  }
+  
+  a:hover {
+    transition: all 0.2s ease;
+  }
+  
+  /* Links with subtle glow on hover */
+  a:not(.no-glow):hover {
+    filter: drop-shadow(0 2px 4px rgba(193, 163, 95, 0.2));
+  }
+  
+  /* Buttons and interactive elements */
+  button,
+  [role="button"] {
+    border-radius: var(--radius);
+    transition: all 0.2s ease;
+  }
+  
+  /* Focus states for accessibility */
+  *:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+    border-radius: var(--radius);
+  }
+  
+  /* Input fields */
+  input,
+  textarea,
+  select {
+    border-radius: var(--radius);
+    transition: all 0.2s ease;
+  }
+  
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px hsl(var(--ring) / 0.1);
+  }
+  
+  /* Smooth transitions for all interactive elements */
+  a,
+  button,
+  [role="button"],
+  input,
+  textarea,
+  select {
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 200ms;
+  }
+  
+  /* Icon Styling - Rounded, Organic Appearance */
+  svg {
+    transition: all 0.2s ease;
+  }
+  
+  /* Icons in buttons - use gold or green colors */
+  button svg,
+  [role="button"] svg {
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  
+  /* Primary button icons - gold color */
+  button[class*="bg-primary"] svg,
+  button[class*="bg-primary"] svg * {
+    stroke: hsl(var(--primary-foreground));
+    fill: none;
+  }
+  
+  /* Secondary button icons - green color */
+  button[class*="bg-secondary"] svg,
+  button[class*="bg-secondary"] svg * {
+    stroke: hsl(var(--secondary-foreground));
+    fill: none;
+  }
+  
+  /* Icon styling for links */
+  a svg {
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: all 0.2s ease;
+  }
+  
+  /* Default icon color - use gold for accent icons */
+  .icon-gold svg,
+  .icon-gold svg * {
+    stroke: hsl(var(--ancient-gold));
+    fill: none;
+  }
+  
+  /* Green icon color */
+  .icon-green svg,
+  .icon-green svg * {
+    stroke: hsl(var(--jungle-green));
+    fill: none;
+  }
+  
+  /* Organic rounded icon appearance */
+  svg[class*="rounded"],
+  .icon-organic svg {
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
   }
 }

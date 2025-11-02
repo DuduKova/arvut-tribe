@@ -1,0 +1,79 @@
+{
+  "navigation": {
+    "home": "בית",
+    "volunteer": "התנדב כמרפא",
+    "register": "הירשם כמטופל",
+    "language": "שפה"
+  },
+  "homepage": {
+    "hero": {
+      "title": "ברוכים הבאים לרטריטים הרוחניים שלנו",
+      "subtitle": "מקום של ריפוי, צמיחה והתחברות פנימית",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris."
+    },
+    "about": {
+      "title": "אודות הרטריטים שלנו",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+    },
+    "services": {
+      "title": "השירותים שלנו",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    },
+    "cta": {
+      "volunteer": {
+        "title": "התנדב כמרפא",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      },
+      "register": {
+        "title": "הירשם כמטופל",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      }
+    }
+  },
+  "forms": {
+    "healer": {
+      "title": "התנדבות כמרפא",
+      "steps": {
+        "personal": "מידע אישי",
+        "experience": "ניסיון והכשרה",
+        "availability": "זמינות והעדפות"
+      },
+      "fields": {
+        "name": "שם מלא",
+        "email": "אימייל",
+        "phone": "טלפון",
+        "experience": "ניסיון בריפוי",
+        "qualifications": "הכשרות מקצועיות",
+        "availability": "זמינות",
+        "preferences": "העדפות"
+      }
+    },
+    "patient": {
+      "title": "הרשמה כמטופל",
+      "steps": {
+        "personal": "מידע אישי",
+        "health": "רקע בריאותי",
+        "preferences": "העדפות וזמינות"
+      },
+      "fields": {
+        "name": "שם מלא",
+        "email": "אימייל",
+        "phone": "טלפון",
+        "healthBackground": "רקע בריאותי",
+        "preferences": "העדפות",
+        "availability": "זמינות"
+      }
+    },
+    "common": {
+      "next": "הבא",
+      "previous": "הקודם",
+      "submit": "שלח",
+      "required": "שדה חובה"
+    }
+  },
+  "footer": {
+    "contact": "צור קשר",
+    "email": "אימייל",
+    "phone": "טלפון"
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "navigation": {
+    "home": "Home",
+    "volunteer": "Volunteer as Healer",
+    "register": "Register as Patient",
+    "language": "Language"
+  },
+  "homepage": {
+    "hero": {
+      "title": "Welcome to Our Spiritual Retreats",
+      "subtitle": "A place of healing, growth, and inner connection",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris."
+    },
+    "about": {
+      "title": "About Our Retreats",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+    },
+    "services": {
+      "title": "Our Services",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    },
+    "cta": {
+      "volunteer": {
+        "title": "Volunteer as Healer",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      },
+      "register": {
+        "title": "Register as Patient",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      }
+    }
+  },
+  "forms": {
+    "healer": {
+      "title": "Volunteer as Healer",
+      "steps": {
+        "personal": "Personal Information",
+        "experience": "Experience & Qualifications",
+        "availability": "Availability & Preferences"
+      },
+      "fields": {
+        "name": "Full Name",
+        "email": "Email",
+        "phone": "Phone",
+        "experience": "Healing Experience",
+        "qualifications": "Professional Qualifications",
+        "availability": "Availability",
+        "preferences": "Preferences"
+      }
+    },
+    "patient": {
+      "title": "Register as Patient",
+      "steps": {
+        "personal": "Personal Information",
+        "health": "Health Background",
+        "preferences": "Preferences & Availability"
+      },
+      "fields": {
+        "name": "Full Name",
+        "email": "Email",
+        "phone": "Phone",
+        "healthBackground": "Health Background",
+        "preferences": "Preferences",
+        "availability": "Availability"
+      }
+    },
+    "common": {
+      "next": "Next",
+      "previous": "Previous",
+      "submit": "Submit",
+      "required": "Required field"
+    }
+  },
+  "footer": {
+    "contact": "Contact",
+    "email": "Email",
+    "phone": "Phone"
+  }
+}
