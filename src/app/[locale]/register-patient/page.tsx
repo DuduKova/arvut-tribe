@@ -317,8 +317,6 @@ export default function RegisterPatientForm() {
                           ? "הכנס את שמך המלא"
                           : "Enter your full name"
                       }
-                      lang={locale}
-                      dir={isHebrew ? "rtl" : "ltr"}
                       required
                     />
                   </div>
