@@ -3,7 +3,8 @@
     "home": "Home",
     "volunteer": "Facilitator Questionnaire",
     "register": "Applicant Questionnaire",
-    "language": "Language"
+    "language": "Language",
+    "organizationName": "The Tribe Guardians"
   },
   "homepage": {
     "hero": {
@@ -88,6 +89,7 @@
     "email": "Email",
     "phone": "Phone",
     "quickLinks": "Quick Links",
-    "copyright": "© 2024 The Tribe Guardians. All rights reserved."
+    "copyright": "© 2024 The Tribe Guardians. All rights reserved.",
+    "organizationName": "The Tribe Guardians"
   }
 }

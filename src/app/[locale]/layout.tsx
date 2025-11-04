@@ -67,7 +67,7 @@ export default async function RootLayout({
                       href={`/${locale}`}
                       className="text-2xl font-bold text-gray-900"
                     >
-                      The Tribe Guardians
+                      {t("organizationName")}
                     </Link>
 
                     <nav className="hidden md:flex items-center space-x-6">
@@ -106,7 +106,7 @@ export default async function RootLayout({
                 <div className="container mx-auto px-4">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div dir={isHebrew ? "rtl" : "ltr"} className={isHebrew ? "text-right" : "text-left"}>
-                      <h3 className="text-lg font-semibold mb-4">The Tribe Guardians</h3>
+                      <h3 className="text-lg font-semibold mb-4">{tFooter("organizationName")}</h3>
                       <p className="text-gray-300">
                         
                       </p>

@@ -3,7 +3,8 @@
     "home": "בית",
     "volunteer": "שאלון למטפל",
     "register": "שאלון למועמד",
-    "language": "שפה"
+    "language": "שפה",
+    "organizationName": "שומרי השבט"
   },
   "homepage": {
     "hero": {
@@ -88,6 +89,7 @@
     "email": "אימייל",
     "phone": "טלפון",
     "quickLinks": "קישורים מהירים",
-    "copyright": "© 2024 שומרי השבט. כל הזכויות שמורות."
+    "copyright": "© 2024 שומרי השבט. כל הזכויות שמורות.",
+    "organizationName": "שומרי השבט"
   }
 }
