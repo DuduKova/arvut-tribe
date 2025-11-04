@@ -37,8 +37,8 @@ export async function generateMetadata({
     ? "שומרי השבט - שליחת טפסים"
     : "Tribe Guardians - Submit Forms";
   const description = isHebrew
-    ? "מקום של ריפוי, צמיחה וחיבור פנימי דרך ריטריטים רוחניים"
-    : "A place of healing, growth, and inner connection through spiritual retreats";
+    ? "מסע ריפוי וצמיחה בתמיכה שבטית"
+    : "A healing and growth journey with tribal support";
 
   // Get base URL - update this with your actual domain
   const baseUrl =
