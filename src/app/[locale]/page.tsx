@@ -1,5 +1,7 @@
+import Link from "next/link";
+
 export default async function HomePage({
-  params
+  params,
 }: {
   params: Promise<{ locale: string }>;
 }) {
@@ -15,7 +17,7 @@ export default async function HomePage({
               ברוכים הבאים לערבות השבט
             </h1>
             <h2 className="text-xl md:text-2xl text-earth-brown/80 mb-8">
-              מסע ריפוי בארץ ובחו"ל עם רפואות האמזונס
+              מסע ריפוי בארץ ובחו&quot;ל עם רפואות האמזונס
             </h2>
           </div>
 
@@ -23,9 +25,9 @@ export default async function HomePage({
           <div className="bg-card border-2 border-jungle-green/20 rounded-lg shadow-lg p-6 md:p-10 mb-8 space-y-6">
             <div className="prose prose-lg max-w-none text-foreground space-y-4">
               <p className="text-base md:text-lg leading-relaxed">
-                לקראת תהליך ההיכרות, לפניכם טפסי הצטרפות ראשוניים.
-                נשמח שתענו עליהם מהמחשב בנחת, ומומלץ לפנות כחצי שעה למילוי.
-                המענה בטפסים הוא אישי וחסוי – אין במילוי משום התחייבות.
+                לקראת תהליך ההיכרות, לפניכם טפסי הצטרפות ראשוניים. נשמח שתענו
+                עליהם מהמחשב בנחת, ומומלץ לפנות כחצי שעה למילוי. המענה בטפסים
+                הוא אישי וחסוי – אין במילוי משום התחייבות.
               </p>
 
               <div className="bg-indigo-violet/10 border-r-4 border-indigo-violet p-4 rounded mt-6">
@@ -33,8 +35,9 @@ export default async function HomePage({
                   <strong className="text-indigo-violet">לתשומת לבכם:</strong>
                 </p>
                 <p className="text-sm md:text-base text-foreground">
-                  מרבית המידע המפורט על המסע יישלח אליכם לאחר שנסיים את שלב המיון הראשוני, בתהליך אישי.
-                  בסיום מילוי הטפסים – צוות ערבות השבט ייצור איתכם קשר להמשך תהליך אישי וקבלת מידע נוסף.
+                  מרבית המידע המפורט על המסע יישלח אליכם לאחר שנסיים את שלב
+                  המיון הראשוני, בתהליך אישי. בסיום מילוי הטפסים – צוות ערבות
+                  השבט ייצור איתכם קשר להמשך תהליך אישי וקבלת מידע נוסף.
                 </p>
               </div>
             </div>
@@ -45,25 +48,25 @@ export default async function HomePage({
             <h3 className="text-2xl font-semibold text-earth-brown mb-6 text-center">
               בחרו לאיזה טופס ברצונכם להמשיך:
             </h3>
-            
+
             <div className="grid md:grid-cols-2 gap-6 mt-8">
-              <a
+              <Link
                 href={`/${locale}/register-patient`}
                 className="bg-ancient-gold text-earth-brown px-6 py-6 rounded-lg text-lg font-medium hover:bg-ancient-gold/90 transition-all duration-200 shadow-md hover:shadow-lg text-center block"
               >
                 טופס הרשמה למתעניינים בהשתתפות בריטריט
-              </a>
-              
-              <a
+              </Link>
+
+              <Link
                 href={`/${locale}/volunteer-healer`}
                 className="bg-jungle-green text-warm-cream px-6 py-6 rounded-lg text-lg font-medium hover:bg-jungle-green/90 transition-all duration-200 shadow-md hover:shadow-lg text-center block"
               >
                 טופס הרשמה למטפלים המעוניינים להצטרף לצוות הריטריט
-              </a>
+              </Link>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }

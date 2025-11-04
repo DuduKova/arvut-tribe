@@ -1,12 +1,12 @@
-# WhatsApp Business API Integration Setup
+# Green API WhatsApp Integration Setup
 
-This file contains instructions for setting up WhatsApp Business API integration for form notifications.
+This file contains instructions for setting up WhatsApp integration using Green API for form notifications.
 
 ## Prerequisites
 
-1. WhatsApp Business Account
-2. Meta Business Account
-3. WhatsApp Business API access (via Meta or third-party provider)
+1. Green API account - Sign up at [https://console.green-api.com/](https://console.green-api.com/)
+2. WhatsApp account (personal or business) - You'll connect it to Green API
+3. Green API instance created in the console
 
 ## Configuration
 
@@ -15,52 +15,21 @@ This file contains instructions for setting up WhatsApp Business API integration
 Add these to your `.env.local` file:
 
 ```env
-# WhatsApp Business API Configuration
-WHATSAPP_ACCESS_TOKEN=your_whatsapp_access_token
-WHATSAPP_PHONE_NUMBER_ID=your_phone_number_id
-WHATSAPP_BUSINESS_ACCOUNT_ID=your_business_account_id
-WHATSAPP_WEBHOOK_VERIFY_TOKEN=your_webhook_verify_token
+# Green API Configuration
+GREEN_API_ID_INSTANCE=your_idInstance_here
+GREEN_API_API_TOKEN=your_apiTokenInstance_here
+
+# Admin phone number to receive form notifications
+# Can be in format: 972501234567 or +972501234567 (will be auto-formatted)
+ADMIN_PHONE_NUMBER=972501234567
 ```
 
-### Message Templates
+### Getting Your Credentials
 
-Create message templates in your WhatsApp Business Manager:
-
-#### Healer Application Template
-```
-Template Name: healer_application_notification
-Category: UTILITY
-Language: Hebrew/English
-
-Body:
-שלום! התקבלה בקשה חדשה להתנדבות כמרפא:
-
-שם: {{1}}
-אימייל: {{2}}
-טלפון: {{3}}
-
-ניסיון: {{4}}
-
-אנא בדוק את הבקשה במערכת הניהול.
-```
-
-#### Patient Registration Template
-```
-Template Name: patient_registration_notification
-Category: UTILITY
-Language: Hebrew/English
-
-Body:
-שלום! התקבלה הרשמה חדשה כמטופל:
-
-שם: {{1}}
-אימייל: {{2}}
-טלפון: {{3}}
-
-רקע בריאותי: {{4}}
-
-אנא בדוק את ההרשמה במערכת הניהול.
-```
+1. Go to [Green API Console](https://console.green-api.com/)
+2. Create or select an instance
+3. Copy your `idInstance` and `apiTokenInstance` from the instance settings
+4. Connect your WhatsApp number by scanning the QR code shown in the console
 
 ## Implementation
 
@@ -70,129 +39,122 @@ Body:
 npm install axios
 ```
 
-### 2. Create WhatsApp Service
+### 2. WhatsApp Service
 
-Create `src/lib/whatsapp.ts`:
+The WhatsApp service (`src/lib/whatsapp.ts`) is already configured to use Green API:
 
-```typescript
-import axios from 'axios'
+- **Endpoint**: `https://api.green-api.com/waInstance{idInstance}/sendMessage/{apiTokenInstance}`
+- **Authentication**: Via URL path parameters (idInstance and apiTokenInstance)
+- **Phone Format**: Automatically formats to `{phone}@c.us` (e.g., `972501234567@c.us`)
 
-const WHATSAPP_API_URL = 'https://graph.facebook.com/v18.0'
+### 3. Form Submission Integration
 
-export async function sendWhatsAppMessage(
-  phoneNumber: string,
-  templateName: string,
-  parameters: string[]
-) {
-  try {
-    const response = await axios.post(
-      `${WHATSAPP_API_URL}/${process.env.WHATSAPP_PHONE_NUMBER_ID}/messages`,
-      {
-        messaging_product: 'whatsapp',
-        to: phoneNumber,
-        type: 'template',
-        template: {
-          name: templateName,
-          language: { code: 'he' },
-          components: [
-            {
-              type: 'body',
-              parameters: parameters.map(param => ({ type: 'text', text: param }))
-            }
-          ]
-        }
-      },
-      {
-        headers: {
-          'Authorization': `Bearer ${process.env.WHATSAPP_ACCESS_TOKEN}`,
-          'Content-Type': 'application/json'
-        }
-      }
-    )
-    
-    return response.data
-  } catch (error) {
-    console.error('WhatsApp API Error:', error)
-    throw error
-  }
-}
+The form submission functions in `src/lib/supabase/forms.ts` automatically send WhatsApp notifications:
+
+- **Healer Applications**: Sends notification when a new healer application is submitted
+- **Patient Registrations**: Sends notification when a new patient registration is submitted
+
+Notifications include:
+
+- Name, age, contact information
+- Brief summary of experience/health background
+- Link to check the submission in the admin system
+
+## Message Format
+
+Messages are sent as plain text (Green API doesn't require template approval like Meta's API). The format includes:
+
+**Healer Application:**
+
+```
+🔔 בקשה חדשה להתנדבות כמרפא
+
+שם: [Name]
+גיל: [Age]
+טלפון: [Phone]
+אימייל: [Email]
+מקצוע עיקרי: [Profession]
+
+ניסיון:
+[Experience Summary]
+
+אנא בדוק את הבקשה במערכת הניהול.
 ```
 
-### 3. Update Form Submission
+**Patient Registration:**
 
-Update `src/lib/supabase/forms.ts` to include WhatsApp notifications:
-
-```typescript
-import { sendWhatsAppMessage } from './whatsapp'
-
-export async function submitHealerApplication(data: HealerApplication) {
-  // ... existing Supabase code ...
-  
-  // Send WhatsApp notification
-  try {
-    await sendWhatsAppMessage(
-      process.env.ADMIN_PHONE_NUMBER!, // Admin phone number
-      'healer_application_notification',
-      [
-        data.name,
-        data.email,
-        data.phone,
-        data.experience.substring(0, 100) // Truncate for template
-      ]
-    )
-  } catch (error) {
-    console.error('WhatsApp notification failed:', error)
-  }
-  
-  return result
-}
 ```
+🔔 הרשמה חדשה כמטופל
 
-### 4. Webhook Setup (Optional)
+שם: [Name]
+גיל: [Age]
+טלפון: [Phone]
+עיר: [City]
 
-For receiving WhatsApp messages, create `src/app/api/webhook/whatsapp/route.ts`:
+רקע בריאותי:
+[Health Summary]
 
-```typescript
-import { NextRequest, NextResponse } from 'next/server'
+סיבת פניה: [Reason]
 
-export async function GET(request: NextRequest) {
-  const mode = request.nextUrl.searchParams.get('hub.mode')
-  const token = request.nextUrl.searchParams.get('hub.verify_token')
-  const challenge = request.nextUrl.searchParams.get('hub.challenge')
-
-  if (mode === 'subscribe' && token === process.env.WHATSAPP_WEBHOOK_VERIFY_TOKEN) {
-    return new NextResponse(challenge)
-  }
-
-  return new NextResponse('Forbidden', { status: 403 })
-}
-
-export async function POST(request: NextRequest) {
-  const body = await request.json()
-  
-  // Handle incoming WhatsApp messages
-  console.log('WhatsApp webhook received:', body)
-  
-  return new NextResponse('OK')
-}
+אנא בדוק את ההרשמה במערכת הניהול.
 ```
 
 ## Testing
 
-1. Test message sending with a verified phone number
-2. Verify webhook endpoint is accessible
-3. Test form submissions trigger notifications
+1. Ensure your Green API instance is active and WhatsApp is connected
+2. Test form submission from the website
+3. Verify WhatsApp message is received on the admin phone number
+4. Check server logs for any errors
 
 ## Troubleshooting
 
-- Ensure phone numbers are in international format (+972...)
-- Check template approval status in Meta Business Manager
-- Verify access tokens have correct permissions
-- Monitor API rate limits
+### Common Issues
+
+- **"Green API configuration missing"**: Check that `GREEN_API_ID_INSTANCE` and `GREEN_API_API_TOKEN` are set in `.env.local`
+- **"Instance not found"**: Verify your instance ID is correct in Green API console
+- **"Message not sent"**:
+  - Ensure your WhatsApp is connected to the Green API instance (scan QR code)
+  - Check that the phone number format is correct (972XXXXXXXXX format)
+  - Verify your instance has available messages/quota
+- **Phone number format errors**: The service auto-formats numbers, but ensure you provide a valid Israeli phone number
+
+### Phone Number Formatting
+
+The service automatically handles phone number formatting:
+
+- `0501234567` → `972501234567@c.us`
+- `+972501234567` → `972501234567@c.us`
+- `972501234567` → `972501234567@c.us`
+
+### API Rate Limits
+
+Green API has rate limits based on your plan:
+
+- Check your current plan limits in the Green API console
+- Messages are sent asynchronously and won't block form submission if they fail
+- Errors are logged but don't prevent form data from being saved
 
 ## Security Notes
 
-- Never expose access tokens in client-side code
-- Use environment variables for all sensitive data
-- Implement proper error handling
-- Consider rate limiting for production use
+- Never expose `GREEN_API_ID_INSTANCE` or `GREEN_API_API_TOKEN` in client-side code
+- Keep these values in `.env.local` (which is gitignored)
+- For production, add these to your hosting provider's environment variables (Vercel, etc.)
+- WhatsApp notifications are sent server-side only
+
+## Production Deployment
+
+When deploying to production (e.g., Vercel):
+
+1. Go to your project settings → Environment Variables
+2. Add the following variables:
+   - `GREEN_API_ID_INSTANCE`
+   - `GREEN_API_API_TOKEN`
+   - `ADMIN_PHONE_NUMBER`
+3. Ensure these are set for Production, Preview, and Development environments
+4. Redeploy your application
+
+## Additional Resources
+
+- [Green API Documentation](https://green-api.com/en/docs/)
+- [Green API Console](https://console.green-api.com/)
+- [Green API FAQ](https://green-api.com/en/docs/faq/)

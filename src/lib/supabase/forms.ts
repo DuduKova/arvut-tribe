@@ -1,81 +1,246 @@
-import { createClient } from '@/lib/supabase/server'
+import { createServiceClient } from "@/lib/supabase/server";
 
 export interface HealerApplication {
-  name: string
-  email: string
-  phone: string
-  experience: string
-  qualifications: string
-  availability: string
-  preferences: string
+  // Personal & Professional Background
+  fullName: string;
+  age: string;
+  mainProfession: string;
+  treatments: string;
+  // Experience & Expertise
+  traumaExperience: string;
+  retreatExperience: string;
+  teamExperience: string;
+  // Motivation & Self-Assessment
+  motivation: string;
+  strengths: string;
+  weaknesses: string;
+  extremeTools: string;
+  // Specialized Knowledge & Personal Journey
+  shamanicExperience: string;
+  personalJourney: string;
+  priorities: string;
+  availability: string;
+  teamNature: string;
+  contactEmail: string;
+  contactPhone: string;
 }
 
 export interface PatientRegistration {
-  name: string
-  email: string
-  phone: string
-  healthBackground: string
-  preferences: string
-  availability: string
+  // Personal Details
+  fullName: string;
+  age: string;
+  phone: string;
+  city: string;
+  // Medical Background
+  chronicIllnesses: string;
+  medicationHistory: string;
+  // Therapeutic History
+  mentalTreatment: string;
+  previousRetreats: string;
+  ptsdDiagnosis: string;
+  psychiatricMedication: string;
+  hospitalizations: string;
+  addictions: string;
+  // Guidelines & Support
+  reasonForHealing: string;
+  supportSystem: string;
+  readinessLevel: string;
+  expectations: string;
+  currentSituation: string;
+  // Privacy consent
+  privacyConsent: boolean;
 }
 
 export async function submitHealerApplication(data: HealerApplication) {
-  const supabase = await createClient()
-  
+  const supabase = createServiceClient();
+
+  // Store all form data in JSONB column for flexibility
+  const formData = {
+    // Personal & Professional Background
+    fullName: data.fullName,
+    age: data.age,
+    mainProfession: data.mainProfession,
+    treatments: data.treatments,
+    // Experience & Expertise
+    traumaExperience: data.traumaExperience,
+    retreatExperience: data.retreatExperience,
+    teamExperience: data.teamExperience,
+    // Motivation & Self-Assessment
+    motivation: data.motivation,
+    strengths: data.strengths,
+    weaknesses: data.weaknesses,
+    extremeTools: data.extremeTools,
+    // Specialized Knowledge & Personal Journey
+    shamanicExperience: data.shamanicExperience,
+    personalJourney: data.personalJourney,
+    priorities: data.priorities,
+    availability: data.availability,
+    teamNature: data.teamNature,
+    contactEmail: data.contactEmail,
+    contactPhone: data.contactPhone,
+  };
+
   const { data: result, error } = await supabase
-    .from('healer_applications')
+    .from("healer_applications")
     .insert([
       {
-        name: data.name,
-        email: data.email,
-        phone: data.phone,
-        experience: data.experience,
-        qualifications: data.qualifications,
-        availability: data.availability,
-        preferences: data.preferences,
-        status: 'pending'
-      }
+        name: data.fullName,
+        email: data.contactEmail || "",
+        phone: data.contactPhone || "",
+        experience:
+          `${data.traumaExperience || ""} ${data.retreatExperience || ""}`.trim() ||
+          "Not provided",
+        qualifications: data.mainProfession || "Not provided",
+        availability: data.availability || "Not provided",
+        preferences: data.priorities || "Not provided",
+        form_data: formData,
+        status: "pending",
+      },
     ])
-    .select()
+    .select();
 
   if (error) {
-    throw new Error(`Failed to submit application: ${error.message}`)
+    throw new Error(`Failed to submit application: ${error.message}`);
   }
 
-  return result
+  return result;
 }
 
 export async function submitPatientRegistration(data: PatientRegistration) {
-  const supabase = await createClient()
-  
+  const supabase = createServiceClient();
+
+  // Store all form data in JSONB column for flexibility
+  const formData = {
+    // Personal Details
+    fullName: data.fullName,
+    age: data.age,
+    phone: data.phone,
+    city: data.city,
+    // Medical Background
+    chronicIllnesses: data.chronicIllnesses,
+    medicationHistory: data.medicationHistory,
+    // Therapeutic History
+    mentalTreatment: data.mentalTreatment,
+    previousRetreats: data.previousRetreats,
+    ptsdDiagnosis: data.ptsdDiagnosis,
+    psychiatricMedication: data.psychiatricMedication,
+    hospitalizations: data.hospitalizations,
+    addictions: data.addictions,
+    // Guidelines & Support
+    reasonForHealing: data.reasonForHealing,
+    supportSystem: data.supportSystem,
+    readinessLevel: data.readinessLevel,
+    expectations: data.expectations,
+    currentSituation: data.currentSituation,
+    privacyConsent: data.privacyConsent,
+  };
+
+  // Combine health background information
+  const healthBackground =
+    [
+      data.chronicIllnesses && `מחלות כרוניות: ${data.chronicIllnesses}`,
+      data.medicationHistory && `תרופות: ${data.medicationHistory}`,
+      data.mentalTreatment && `טיפול נפשי: ${data.mentalTreatment}`,
+      data.ptsdDiagnosis && `PTSD: ${data.ptsdDiagnosis}`,
+      data.psychiatricMedication &&
+        `תרופות פסיכיאטריות: ${data.psychiatricMedication}`,
+    ]
+      .filter(Boolean)
+      .join("\n") || "Not provided";
+
   const { data: result, error } = await supabase
-    .from('patient_registrations')
+    .from("patient_registrations")
     .insert([
       {
-        name: data.name,
-        email: data.email,
+        name: data.fullName,
+        email: "", // Patient form doesn't have email field
         phone: data.phone,
-        health_background: data.healthBackground,
-        preferences: data.preferences,
-        availability: data.availability,
-        status: 'pending'
-      }
+        health_background: healthBackground,
+        preferences: data.reasonForHealing || "Not provided",
+        availability: data.readinessLevel || "Not provided",
+        form_data: formData,
+        status: "pending",
+      },
     ])
-    .select()
+    .select();
 
   if (error) {
-    throw new Error(`Failed to submit registration: ${error.message}`)
+    throw new Error(`Failed to submit registration: ${error.message}`);
   }
 
-  return result
+  return result;
 }
 
-export async function sendEmailNotification(type: 'healer' | 'patient', data: any) {
+export async function sendEmailNotification(
+  type: "healer" | "patient",
+  data: HealerApplication | PatientRegistration,
+) {
   // TODO: Implement email notification via Supabase Edge Function
-  console.log(`Email notification for ${type}:`, data)
+  console.log(`Email notification for ${type}:`, data);
 }
 
-export async function sendWhatsAppNotification(type: 'healer' | 'patient', data: any) {
-  // TODO: Implement WhatsApp notification
-  console.log(`WhatsApp notification for ${type}:`, data)
+export async function sendWhatsAppNotification(
+  type: "healer" | "patient",
+  data: HealerApplication | PatientRegistration,
+) {
+  const adminPhone = process.env.ADMIN_PHONE_NUMBER;
+
+  if (!adminPhone) {
+    console.warn(
+      "ADMIN_PHONE_NUMBER not configured, skipping WhatsApp notification",
+    );
+    return;
+  }
+
+  try {
+    const { sendWhatsAppTextMessage } = await import("@/lib/whatsapp");
+
+    let message: string;
+
+    if (type === "healer") {
+      const healerData = data as HealerApplication;
+      const experienceSummary = healerData.traumaExperience
+        ? healerData.traumaExperience.substring(0, 100) +
+          (healerData.traumaExperience.length > 100 ? "..." : "")
+        : "לא צוין";
+
+      message = `🔔 בקשה חדשה להתנדבות כמרפא
+
+שם: ${healerData.fullName}
+גיל: ${healerData.age}
+טלפון: ${healerData.contactPhone || "לא צוין"}
+אימייל: ${healerData.contactEmail || "לא צוין"}
+מקצוע עיקרי: ${healerData.mainProfession || "לא צוין"}
+
+ניסיון:
+${experienceSummary}
+
+אנא בדוק את הבקשה במערכת הניהול.`;
+    } else {
+      const patientData = data as PatientRegistration;
+      const healthSummary = patientData.chronicIllnesses
+        ? patientData.chronicIllnesses.substring(0, 100) +
+          (patientData.chronicIllnesses.length > 100 ? "..." : "")
+        : "לא צוין";
+
+      message = `🔔 הרשמה חדשה כמטופל
+
+שם: ${patientData.fullName}
+גיל: ${patientData.age}
+טלפון: ${patientData.phone}
+עיר: ${patientData.city || "לא צוין"}
+
+רקע בריאותי:
+${healthSummary}
+
+סיבת פניה: ${patientData.reasonForHealing || "לא צוין"}
+
+אנא בדוק את ההרשמה במערכת הניהול.`;
+    }
+
+    await sendWhatsAppTextMessage(adminPhone, message);
+  } catch (error) {
+    // Log error but don't throw - WhatsApp notification failure shouldn't block form submission
+    console.error("Failed to send WhatsApp notification:", error);
+  }
 }
