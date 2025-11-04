@@ -25,11 +25,52 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
-export const metadata: Metadata = {
-  title: "The Tribe Guardians - Spiritual Retreats",
-  description:
-    "A place of healing, growth, and inner connection through spiritual retreats",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const isHebrew = locale === "he";
+
+  const title = isHebrew
+    ? "שומרי השבט - שליחת טפסים"
+    : "Tribe Guardians - Submit Forms";
+  const description = isHebrew
+    ? "מקום של ריפוי, צמיחה וחיבור פנימי דרך ריטריטים רוחניים"
+    : "A place of healing, growth, and inner connection through spiritual retreats";
+
+  // Get base URL - update this with your actual domain
+  const baseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL || "https://your-domain.com";
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `${baseUrl}/${locale}`,
+      siteName: isHebrew ? "שומרי השבט" : "Tribe Guardians",
+      images: [
+        {
+          url: "/og-image.jpg",
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+      locale: isHebrew ? "he_IL" : "en_US",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ["/og-image.jpg"],
+    },
+  };
+}
 
 export default async function RootLayout({
   children,

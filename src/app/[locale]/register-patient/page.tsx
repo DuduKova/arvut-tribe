@@ -9,6 +9,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 export default function RegisterPatientForm() {
   const params = useParams();
@@ -20,6 +21,7 @@ export default function RegisterPatientForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const redirectTimerRef = useRef<NodeJS.Timeout | null>(null);
   const reasonForHealingRef = useRef<HTMLTextAreaElement>(null);
   const [formData, setFormData] = useState({
     // Step 1: Personal Details
@@ -87,12 +89,26 @@ export default function RegisterPatientForm() {
   // Navigate to home page after successful submission
   useEffect(() => {
     if (submitSuccess) {
-      const timer = setTimeout(() => {
+      redirectTimerRef.current = setTimeout(() => {
+        setSubmitSuccess(false);
         router.push(`/${locale}`);
-      }, 3000); // Navigate after 3 seconds
-      return () => clearTimeout(timer);
+      }, 15000); // Navigate after 15 seconds
+      return () => {
+        if (redirectTimerRef.current) {
+          clearTimeout(redirectTimerRef.current);
+        }
+      };
     }
   }, [submitSuccess, router, locale]);
+
+  const handleCloseDialog = () => {
+    if (redirectTimerRef.current) {
+      clearTimeout(redirectTimerRef.current);
+      redirectTimerRef.current = null;
+    }
+    setSubmitSuccess(false);
+    router.push(`/${locale}`);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -202,12 +218,12 @@ export default function RegisterPatientForm() {
           )}
 
           {/* Progress Indicator */}
-          <div className="mb-8">
-            <div className="flex items-center justify-between">
+          <div className="mb-8 overflow-x-hidden">
+            <div className="flex items-center justify-between w-full">
               {steps.map((step, index) => (
-                <div key={index} className="flex items-center">
+                <div key={index} className="flex items-center flex-1">
                   <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium ${
+                    className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-xs md:text-sm font-medium shrink-0 ${
                       index <= currentStep
                         ? "bg-blue-600 text-white"
                         : "bg-gray-200 text-gray-600"
@@ -217,7 +233,7 @@ export default function RegisterPatientForm() {
                   </div>
                   {index < steps.length - 1 && (
                     <div
-                      className={`w-16 h-1 mx-2 ${
+                      className={`w-2 md:w-8 lg:w-16 h-1 mx-0.5 md:mx-2 flex-1 ${
                         index < currentStep ? "bg-blue-600" : "bg-gray-200"
                       }`}
                     />
@@ -227,7 +243,7 @@ export default function RegisterPatientForm() {
             </div>
             <div className="flex justify-between mt-2">
               {steps.map((step, index) => (
-                <div key={index} className="text-xs text-center w-24">
+                <div key={index} className="text-xs text-center flex-1 min-w-0 px-0.5">
                   {isHebrew ? step.title : step.titleEn}
                 </div>
               ))}
@@ -837,6 +853,11 @@ export default function RegisterPatientForm() {
                 ? "מעבירים אותך לדף הבית..."
                 : "Redirecting to home page..."}
             </p>
+            <div className="mt-6">
+              <Button onClick={handleCloseDialog} className="w-full">
+                {isHebrew ? "חזור לדף הבית" : "Return to Home"}
+              </Button>
+            </div>
           </DialogHeader>
         </DialogContent>
       </Dialog>

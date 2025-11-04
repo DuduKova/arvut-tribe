@@ -39,12 +39,12 @@ export default function MultiStepForm({
   return (
     <div className={className}>
       {/* Progress Indicator */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between">
+      <div className="mb-8 overflow-x-hidden">
+        <div className="flex items-center justify-between w-full">
           {steps.map((_, index) => (
-            <div key={index} className="flex items-center">
+            <div key={index} className="flex items-center flex-1">
               <div
-                className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
+                className={`w-8 h-8 rounded-full flex items-center justify-center text-xs md:text-sm font-medium shrink-0 ${
                   index <= currentStep
                     ? "bg-blue-600 text-white"
                     : "bg-gray-200 text-gray-600"
@@ -54,7 +54,7 @@ export default function MultiStepForm({
               </div>
               {index < steps.length - 1 && (
                 <div
-                  className={`w-16 h-1 mx-2 ${
+                  className={`w-2 md:w-8 lg:w-16 h-1 mx-0.5 md:mx-2 flex-1 ${
                     index < currentStep ? "bg-blue-600" : "bg-gray-200"
                   }`}
                 />
