@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import {
   submitPatientRegistration,
   sendWhatsAppNotification,
+  sendEmailNotification,
   type PatientRegistration,
 } from "@/lib/supabase/forms";
 
@@ -56,6 +57,14 @@ export async function POST(request: NextRequest) {
     } catch (whatsappError) {
       // Log error but don't fail the request
       console.error("WhatsApp notification failed:", whatsappError);
+    }
+
+    // Send email notification (non-blocking)
+    try {
+      await sendEmailNotification("patient", patientData);
+    } catch (emailError) {
+      // Log error but don't fail the request
+      console.error("Email notification failed:", emailError);
     }
 
     return NextResponse.json(

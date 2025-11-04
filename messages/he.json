@@ -1,32 +1,44 @@
 {
   "navigation": {
     "home": "בית",
-    "volunteer": "התנדב כמרפא",
-    "register": "הירשם כמטופל",
+    "volunteer": "שאלון למטפל",
+    "register": "שאלון למועמד",
     "language": "שפה"
   },
   "homepage": {
     "hero": {
-      "title": "ברוכים הבאים לרטריטים הרוחניים שלנו",
-      "subtitle": "מקום של ריפוי, צמיחה והתחברות פנימית",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris."
+      "title": "ברוכים הבאים לשומרי השבט",
+      "subtitle": "מסע ריפוי בארץ ובחו\"ל עם רפואות האמזונס",
+      "description": ""
+    },
+    "intro": {
+      "paragraph": "לקראת תהליך ההיכרות, לפניכם טפסי הצטרפות ראשוניים. נשמח שתענו עליהם מהמחשב בנחת, ומומלץ לפנות כחצי שעה למילוי. המענה בטפסים הוא אישי וחסוי – אין במילוי משום התחייבות.",
+      "notice": {
+        "title": "לתשומת לבכם:",
+        "text": "מרבית המידע המפורט על המסע יישלח אליכם לאחר שנסיים את שלב המיון הראשוני, בתהליך אישי. בסיום מילוי הטפסים – צוות שומרי השבט ייצור איתכם קשר להמשך תהליך אישי וקבלת מידע נוסף."
+      }
+    },
+    "formSelection": {
+      "title": "בחרו לאיזה טופס ברצונכם להמשיך:",
+      "patientForm": "שאלון למועמד בהשתתפות בריטריט",
+      "healerForm": "שאלון למועמד להצטרפות כמטפל לריטריט"
     },
     "about": {
       "title": "אודות הרטריטים שלנו",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+      "description": ""
     },
     "services": {
       "title": "השירותים שלנו",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      "description": ""
     },
     "cta": {
       "volunteer": {
         "title": "התנדב כמרפא",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        "description": ""
       },
       "register": {
         "title": "הירשם כמטופל",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        "description": ""
       }
     }
   },
@@ -74,6 +86,8 @@
   "footer": {
     "contact": "צור קשר",
     "email": "אימייל",
-    "phone": "טלפון"
+    "phone": "טלפון",
+    "quickLinks": "קישורים מהירים",
+    "copyright": "© 2024 שומרי השבט. כל הזכויות שמורות."
   }
 }

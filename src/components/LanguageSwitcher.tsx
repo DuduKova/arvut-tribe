@@ -1,39 +1,40 @@
-"use client";
+'use client'
 
-import { useLocale } from "next-intl";
-import { useRouter, usePathname } from "next/navigation";
-import { Button } from "@/components/ui/button";
+import { useLocale, useTranslations } from 'next-intl'
+import { useRouter, usePathname } from 'next/navigation'
+import { Button } from '@/components/ui/button'
 
 export default function LanguageSwitcher() {
-  const locale = useLocale();
-  const router = useRouter();
-  const pathname = usePathname();
+  const t = useTranslations('navigation')
+  const locale = useLocale()
+  const router = useRouter()
+  const pathname = usePathname()
 
   const switchLanguage = (newLocale: string) => {
     // Remove the current locale from the pathname
-    const pathWithoutLocale = pathname.replace(`/${locale}`, "") || "/";
+    const pathWithoutLocale = pathname.replace(`/${locale}`, '') || '/'
     // Navigate to the new locale
-    router.push(`/${newLocale}${pathWithoutLocale}`);
-  };
+    router.push(`/${newLocale}${pathWithoutLocale}`)
+  }
 
   return (
     <div className="flex gap-2">
       <Button
-        variant={locale === "he" ? "default" : "outline"}
+        variant={locale === 'he' ? 'default' : 'outline'}
         size="sm"
-        onClick={() => switchLanguage("he")}
+        onClick={() => switchLanguage('he')}
         className="text-sm"
       >
         עברית
       </Button>
       <Button
-        variant={locale === "en" ? "default" : "outline"}
+        variant={locale === 'en' ? 'default' : 'outline'}
         size="sm"
-        onClick={() => switchLanguage("en")}
+        onClick={() => switchLanguage('en')}
         className="text-sm"
       >
         English
       </Button>
     </div>
-  );
+  )
 }

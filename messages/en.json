@@ -1,32 +1,44 @@
 {
   "navigation": {
     "home": "Home",
-    "volunteer": "Volunteer as Healer",
-    "register": "Register as Patient",
+    "volunteer": "Facilitator Questionnaire",
+    "register": "Applicant Questionnaire",
     "language": "Language"
   },
   "homepage": {
     "hero": {
-      "title": "Welcome to Our Spiritual Retreats",
-      "subtitle": "A place of healing, growth, and inner connection",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris."
+      "title": "Welcome to The Tribe Guardians",
+      "subtitle": "A healing journey in Israel and abroad with Amazonian medicine",
+      "description": ""
+    },
+    "intro": {
+      "paragraph": "Before the initial acquaintance process, please find below the initial registration forms. We would appreciate if you fill them out from your computer at your leisure, and we recommend setting aside about half an hour to complete them. The information in the forms is personal and confidential – filling them out does not constitute any commitment.",
+      "notice": {
+        "title": "Please note:",
+        "text": "Most of the detailed information about the journey will be sent to you after we complete the initial screening stage, in a personal process. After completing the forms – The Tribe Guardians team will contact you to continue the personal process and provide additional information."
+      }
+    },
+    "formSelection": {
+      "title": "Choose which form you would like to continue with:",
+      "patientForm": "Registration form for those interested in participating in the retreat",
+      "healerForm": "Registration form for therapists interested in joining the retreat team"
     },
     "about": {
       "title": "About Our Retreats",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+      "description": ""
     },
     "services": {
       "title": "Our Services",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      "description": ""
     },
     "cta": {
       "volunteer": {
         "title": "Volunteer as Healer",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        "description": ""
       },
       "register": {
         "title": "Register as Patient",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        "description": ""
       }
     }
   },
@@ -74,6 +86,8 @@
   "footer": {
     "contact": "Contact",
     "email": "Email",
-    "phone": "Phone"
+    "phone": "Phone",
+    "quickLinks": "Quick Links",
+    "copyright": "© 2024 The Tribe Guardians. All rights reserved."
   }
 }

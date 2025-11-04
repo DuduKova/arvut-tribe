@@ -1,12 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useParams, useRouter } from "next/navigation";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
 export default function RegisterPatientForm() {
+  const params = useParams();
+  const router = useRouter();
+  const locale = (params.locale as string) || "he";
+  const isHebrew = locale === "he";
+  
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const reasonForHealingRef = useRef<HTMLTextAreaElement>(null);
   const [formData, setFormData] = useState({
     // Step 1: Personal Details
     fullName: "",
@@ -33,19 +47,52 @@ export default function RegisterPatientForm() {
     privacyConsent: false,
   });
 
-  const [locale] = useState("he"); // You can get this from URL or context
-
   const updateField = (field: string, value: string | boolean) => {
     setFormData({ ...formData, [field]: value });
   };
 
   const nextStep = () => {
-    if (currentStep < 4) setCurrentStep(currentStep + 1);
+    if (currentStep < 4) {
+      setCurrentStep(currentStep + 1);
+      // Scroll to top when navigating to next step
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   const prevStep = () => {
-    if (currentStep > 0) setCurrentStep(currentStep - 1);
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+      // Scroll to top when navigating to previous step
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
+
+  // Scroll to top when step changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentStep]);
+
+  // Prevent auto-focus on reasonForHealing field (step 3)
+  useEffect(() => {
+    if (currentStep === 3 && reasonForHealingRef.current) {
+      // Blur the field after a short delay to override browser auto-focus
+      setTimeout(() => {
+        if (reasonForHealingRef.current) {
+          reasonForHealingRef.current.blur();
+        }
+      }, 100);
+    }
+  }, [currentStep]);
+
+  // Navigate to home page after successful submission
+  useEffect(() => {
+    if (submitSuccess) {
+      const timer = setTimeout(() => {
+        router.push(`/${locale}`);
+      }, 3000); // Navigate after 3 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [submitSuccess, router, locale]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,7 +104,7 @@ export default function RegisterPatientForm() {
       // Basic validation
       if (!formData.fullName || !formData.phone) {
         setSubmitError(
-          locale === "he"
+          isHebrew
             ? "שם מלא ומספר טלפון הם שדות חובה"
             : "Full name and phone number are required",
         );
@@ -67,7 +114,7 @@ export default function RegisterPatientForm() {
 
       if (!formData.privacyConsent) {
         setSubmitError(
-          locale === "he"
+          isHebrew
             ? "יש לאשר את הסכמת הפרטיות"
             : "You must consent to privacy policy",
         );
@@ -90,38 +137,13 @@ export default function RegisterPatientForm() {
       }
 
       setSubmitSuccess(true);
-      // Reset form after successful submission
-      setTimeout(() => {
-        setFormData({
-          fullName: "",
-          age: "",
-          phone: "",
-          city: "",
-          chronicIllnesses: "",
-          medicationHistory: "",
-          mentalTreatment: "",
-          previousRetreats: "",
-          ptsdDiagnosis: "",
-          psychiatricMedication: "",
-          hospitalizations: "",
-          addictions: "",
-          reasonForHealing: "",
-          supportSystem: "",
-          readinessLevel: "",
-          expectations: "",
-          currentSituation: "",
-          privacyConsent: false,
-        });
-        setCurrentStep(0);
-        setSubmitSuccess(false);
-      }, 3000);
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error";
       console.error("Error submitting form:", error);
       setSubmitError(
         errorMessage ||
-          (locale === "he"
+          (isHebrew
             ? "שגיאה בשליחת הטופס. אנא נסה שוב."
             : "Error submitting form. Please try again."),
       );
@@ -132,24 +154,24 @@ export default function RegisterPatientForm() {
 
   const steps = [
     {
-      title: locale === "he" ? "פרטים אישיים" : "Personal Details",
+      title: isHebrew ? "פרטים אישיים" : "Personal Details",
       titleEn: "Personal Details",
     },
     {
       title:
-        locale === "he" ? "רקע רפואי ופיזי" : "Medical and Physical Background",
+        isHebrew ? "רקע רפואי ופיזי" : "Medical and Physical Background",
       titleEn: "Medical Background",
     },
     {
       title:
-        locale === "he"
+        isHebrew
           ? "היסטוריה טיפולית ונפשית"
           : "Therapeutic and Mental History",
       titleEn: "Mental History",
     },
     {
       title:
-        locale === "he"
+        isHebrew
           ? "הכוונה, תמיכה ומוכנות"
           : "Guidelines, Support, and Readiness",
       titleEn: "Readiness & Support",
@@ -163,23 +185,16 @@ export default function RegisterPatientForm() {
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              {locale === "he" ? "הרשמה כמטופל" : "Patient Registration"}
+              {isHebrew ? "הרשמה כמטופל" : "Patient Registration"}
             </h1>
             <p className="text-lg text-gray-600">
-              {locale === "he"
+              {isHebrew
                 ? "אנא מלא את כל השדות בקפידה. המידע מיועד לצוות המקצועי בלבד."
                 : "Please fill out all fields carefully. Information is for professional staff only."}
             </p>
           </div>
 
-          {/* Success/Error Messages */}
-          {submitSuccess && (
-            <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
-              {locale === "he"
-                ? "הטופס נשלח בהצלחה! נחזור אליך בהקדם."
-                : "Form submitted successfully! We will get back to you soon."}
-            </div>
-          )}
+          {/* Error Messages */}
           {submitError && (
             <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
               {submitError}
@@ -213,7 +228,7 @@ export default function RegisterPatientForm() {
             <div className="flex justify-between mt-2">
               {steps.map((step, index) => (
                 <div key={index} className="text-xs text-center w-24">
-                  {locale === "he" ? step.title : step.titleEn}
+                  {isHebrew ? step.title : step.titleEn}
                 </div>
               ))}
             </div>
@@ -223,12 +238,12 @@ export default function RegisterPatientForm() {
           {currentStep === 0 && !formData.privacyConsent && (
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                {locale === "he"
+                {isHebrew
                   ? "הודעת פרטיות והסכמה"
                   : "Privacy Notice and Consent"}
               </h3>
               <div className="text-sm text-gray-700 mb-4 space-y-2">
-                {locale === "he" ? (
+                {isHebrew ? (
                   <>
                     <p>
                       מידע זה נאסף למטרות רפואיות וטיפוליות בלבד ויישמר בסודיות
@@ -268,7 +283,7 @@ export default function RegisterPatientForm() {
                   required
                 />
                 <span className="text-sm text-gray-800">
-                  {locale === "he"
+                  {isHebrew
                     ? "אני מסכים/ה לאיסוף ועיבוד של מידע רפואי רגיש לצורך תהליך הריפוי"
                     : "I consent to the collection and processing of sensitive medical information for the healing process"}
                 </span>
@@ -288,33 +303,39 @@ export default function RegisterPatientForm() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {locale === "he" ? "שם מלא *" : "Full Name *"}
+                      {isHebrew ? "שם מלא *" : "Full Name *"}
                     </label>
                     <input
                       type="text"
                       value={formData.fullName}
                       onChange={(e) => updateField("fullName", e.target.value)}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      lang={locale}
+                      dir={isHebrew ? "rtl" : "ltr"}
                       placeholder={
-                        locale === "he"
+                        isHebrew
                           ? "הכנס את שמך המלא"
                           : "Enter your full name"
                       }
+                      lang={locale}
+                      dir={isHebrew ? "rtl" : "ltr"}
                       required
                     />
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {locale === "he" ? "גיל *" : "Age *"}
+                      {isHebrew ? "גיל *" : "Age *"}
                     </label>
                     <input
                       type="text"
                       value={formData.age}
                       onChange={(e) => updateField("age", e.target.value)}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      lang={locale}
+                      dir={isHebrew ? "rtl" : "ltr"}
                       placeholder={
-                        locale === "he" ? "הכנס את גילך" : "Enter your age"
+                        isHebrew ? "הכנס את גילך" : "Enter your age"
                       }
                       required
                     />
@@ -322,33 +343,32 @@ export default function RegisterPatientForm() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {locale === "he" ? "טלפון *" : "Phone *"}
+                      {isHebrew ? "טלפון *" : "Phone *"}
                     </label>
                     <input
                       type="tel"
                       value={formData.phone}
                       onChange={(e) => updateField("phone", e.target.value)}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      placeholder={
-                        locale === "he"
-                          ? "הכנס את מספר הטלפון שלך"
-                          : "Enter your phone number"
-                      }
+                      lang={locale}
+                      dir={isHebrew ? "rtl" : "ltr"}
                       required
                     />
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {locale === "he" ? "עיר מגורים *" : "City of Residence *"}
+                      {isHebrew ? "עיר מגורים *" : "City of Residence *"}
                     </label>
                     <input
                       type="text"
                       value={formData.city}
                       onChange={(e) => updateField("city", e.target.value)}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      lang={locale}
+                      dir={isHebrew ? "rtl" : "ltr"}
                       placeholder={
-                        locale === "he"
+                        isHebrew
                           ? "הכנס את עיר מגוריך"
                           : "Enter your city of residence"
                       }
@@ -367,7 +387,7 @@ export default function RegisterPatientForm() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {locale === "he"
+                      {isHebrew
                         ? "האם יש לך מחלות כרוניות או מגבלות פיזיות? פירוט *"
                         : "Do you have any chronic illnesses or physical limitations? Details *"}
                     </label>
@@ -378,8 +398,10 @@ export default function RegisterPatientForm() {
                       }
                       rows={6}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      lang={locale}
+                      dir={isHebrew ? "rtl" : "ltr"}
                       placeholder={
-                        locale === "he"
+                        isHebrew
                           ? "אנא תאר בפירוט כל מחלה כרונית או מגבלה פיזית..."
                           : "Please describe in detail any chronic illness or physical limitation..."
                       }
@@ -389,12 +411,12 @@ export default function RegisterPatientForm() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {locale === "he"
+                      {isHebrew
                         ? "האם אתה נוטל/ת תרופות כרגע או שנטלת בעבר? אנא פרט מאוד *"
                         : "Are you currently taking medication or have you taken it in the past? Please be very specific *"}
                     </label>
                     <p className="text-xs text-gray-500 mb-2">
-                      {locale === "he"
+                      {isHebrew
                         ? "סוג התרופה, תקופה, סיבה"
                         : "Type of medication, period, reason"}
                     </p>
@@ -405,8 +427,10 @@ export default function RegisterPatientForm() {
                       }
                       rows={8}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      lang={locale}
+                      dir={isHebrew ? "rtl" : "ltr"}
                       placeholder={
-                        locale === "he"
+                        isHebrew
                           ? "אנא פרט: סוג התרופה, התקופה בה נטלת אותה, והסיבה למתן התרופה..."
                           : "Please specify: type of medication, period taken, and reason for medication..."
                       }
@@ -425,7 +449,7 @@ export default function RegisterPatientForm() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {locale === "he"
+                      {isHebrew
                         ? "האם עברת או עובר/ת תהליך טיפולי נפשי/פסיכולוגי? אנא פרט את סוג הטיפול, תקופה, מסגרת *"
                         : "Have you undergone or are undergoing mental/psychological treatment? Please specify type, period, setting *"}
                     </label>
@@ -436,8 +460,10 @@ export default function RegisterPatientForm() {
                       }
                       rows={6}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      lang={locale}
+                      dir={isHebrew ? "rtl" : "ltr"}
                       placeholder={
-                        locale === "he"
+                        isHebrew
                           ? "סוג הטיפול, תקופה, מסגרת..."
                           : "Type of treatment, period, setting..."
                       }
@@ -447,12 +473,12 @@ export default function RegisterPatientForm() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {locale === "he"
+                      {isHebrew
                         ? "באילו רטריטים או תהליכי ריפוי אישיים או קבוצתיים השתתפת? אנא פרט *"
                         : "What retreats or personal/group healing processes have you participated in? Please specify *"}
                     </label>
                     <p className="text-xs text-gray-500 mb-2">
-                      {locale === "he"
+                      {isHebrew
                         ? "שם הרטריט/תהליך, סוג, תאריך, שם המנחה אם רלוונטי"
                         : "Name of retreat/process, type, date, facilitator name if applicable"}
                     </p>
@@ -463,8 +489,10 @@ export default function RegisterPatientForm() {
                       }
                       rows={6}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      lang={locale}
+                      dir={isHebrew ? "rtl" : "ltr"}
                       placeholder={
-                        locale === "he"
+                        isHebrew
                           ? "שם הרטריט/תהליך, סוג, תאריך, שם המנחה..."
                           : "Name, type, date, facilitator..."
                       }
@@ -474,12 +502,12 @@ export default function RegisterPatientForm() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {locale === "he"
+                      {isHebrew
                         ? "האם אובחנת בעבר או בהווה עם הפרעת דחק פוסט-טראומטית או הפרעה נפשית אחרת? *"
                         : "Have you been diagnosed with PTSD or another mental disorder in the past or present? *"}
                     </label>
                     <p className="text-xs text-gray-500 mb-2">
-                      {locale === "he"
+                      {isHebrew
                         ? "פרטי האבחנה, תקופה, גורם מאבחן"
                         : "Details of diagnosis, period, diagnostic factor"}
                     </p>
@@ -490,8 +518,10 @@ export default function RegisterPatientForm() {
                       }
                       rows={6}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      lang={locale}
+                      dir={isHebrew ? "rtl" : "ltr"}
                       placeholder={
-                        locale === "he"
+                        isHebrew
                           ? "פרטי האבחנה, תקופה, גורם מאבחן..."
                           : "Diagnosis details, period, diagnostic factor..."
                       }
@@ -501,7 +531,7 @@ export default function RegisterPatientForm() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {locale === "he"
+                      {isHebrew
                         ? "האם אתה נוטל או נטלת בעבר תרופות פסיכיאטריות? אנא פרט *"
                         : "Are you taking or have you taken psychiatric medication in the past? Please specify *"}
                     </label>
@@ -512,8 +542,10 @@ export default function RegisterPatientForm() {
                       }
                       rows={6}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      lang={locale}
+                      dir={isHebrew ? "rtl" : "ltr"}
                       placeholder={
-                        locale === "he"
+                        isHebrew
                           ? "סוג התרופה, תקופה, מינון..."
                           : "Type of medication, period, dosage..."
                       }
@@ -523,7 +555,7 @@ export default function RegisterPatientForm() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {locale === "he"
+                      {isHebrew
                         ? "האם היו אשפוזים פסיכיאטריים, ניסיונות התאבדות או התמוטטויות נפשיות חריפות (עבר/הווה)? אנא פרט *"
                         : "Have there been any psychiatric hospitalizations, suicide attempts, or acute mental breakdowns (past/present)? Please specify *"}
                     </label>
@@ -534,8 +566,10 @@ export default function RegisterPatientForm() {
                       }
                       rows={6}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      lang={locale}
+                      dir={isHebrew ? "rtl" : "ltr"}
                       placeholder={
-                        locale === "he"
+                        isHebrew
                           ? "פירוט מלא של מקרים, תקופות, נסיבות..."
                           : "Full details of incidents, periods, circumstances..."
                       }
@@ -545,7 +579,7 @@ export default function RegisterPatientForm() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {locale === "he"
+                      {isHebrew
                         ? "האם יש התמכרויות פעילות או עבר (אלכוהול/סמים/אחר)? אנא פרט *"
                         : "Are there any active or past addictions (alcohol/drugs/other)? Please specify *"}
                     </label>
@@ -556,8 +590,10 @@ export default function RegisterPatientForm() {
                       }
                       rows={6}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      lang={locale}
+                      dir={isHebrew ? "rtl" : "ltr"}
                       placeholder={
-                        locale === "he"
+                        isHebrew
                           ? "סוג ההתמכרות, תקופה, מצב נוכחי..."
                           : "Type of addiction, period, current status..."
                       }
@@ -576,19 +612,22 @@ export default function RegisterPatientForm() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {locale === "he"
+                      {isHebrew
                         ? "מהי הסיבה שבגללה אתה מבקש לעבור תהליך ריפוי? *"
                         : "What is the reason you are seeking to undergo a healing process? *"}
                     </label>
                     <textarea
+                      ref={reasonForHealingRef}
                       value={formData.reasonForHealing}
                       onChange={(e) =>
                         updateField("reasonForHealing", e.target.value)
                       }
                       rows={6}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      lang={locale}
+                      dir={isHebrew ? "rtl" : "ltr"}
                       placeholder={
-                        locale === "he"
+                        isHebrew
                           ? "תאר את הסיבה המרכזית לפנייתך..."
                           : "Describe the main reason for your request..."
                       }
@@ -598,7 +637,7 @@ export default function RegisterPatientForm() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {locale === "he"
+                      {isHebrew
                         ? "האם יש לך מישהו שתומך בך בתהליך? *"
                         : "Do you have someone who supports you in the process? *"}
                     </label>
@@ -609,8 +648,10 @@ export default function RegisterPatientForm() {
                       }
                       rows={4}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      lang={locale}
+                      dir={isHebrew ? "rtl" : "ltr"}
                       placeholder={
-                        locale === "he"
+                        isHebrew
                           ? "מי תומך בך? משפחה, חברים, מטפל..."
                           : "Who supports you? Family, friends, therapist..."
                       }
@@ -620,7 +661,7 @@ export default function RegisterPatientForm() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-3">
-                      {locale === "he"
+                      {isHebrew
                         ? "עד כמה אתה מרגיש מוכן להתחייב למסע טיפולי אינטנסיבי הדורש התמודדות ומשאבים נפשיים? *"
                         : "To what extent do you feel ready to commit to an intensive therapeutic journey that requires coping and mental resources? *"}
                     </label>
@@ -664,7 +705,7 @@ export default function RegisterPatientForm() {
                             required
                           />
                           <span className="text-sm text-gray-700">
-                            {locale === "he" ? option.labelHe : option.labelEn}
+                            {isHebrew ? option.labelHe : option.labelEn}
                           </span>
                         </label>
                       ))}
@@ -673,7 +714,7 @@ export default function RegisterPatientForm() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {locale === "he"
+                      {isHebrew
                         ? "מהן הציפיות שלך מתהליך הריפוי שאתה יוצא אליו? מה אתה מחפש לפגוש? לקבל? מה חסר בתהליכי הריפוי שנתקלת בהם בעבר? *"
                         : "What are your expectations from the healing process you are embarking on? What are you looking to meet? To receive? What was missing from past healing processes? *"}
                     </label>
@@ -684,8 +725,10 @@ export default function RegisterPatientForm() {
                       }
                       rows={8}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      lang={locale}
+                      dir={isHebrew ? "rtl" : "ltr"}
                       placeholder={
-                        locale === "he"
+                        isHebrew
                           ? "תאר את הציפיות, הצרכים והחוויות הקודמות שלך..."
                           : "Describe your expectations, needs, and past experiences..."
                       }
@@ -695,7 +738,7 @@ export default function RegisterPatientForm() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {locale === "he"
+                      {isHebrew
                         ? "ספר/י לנו על מצב חייך הנוכחי, האתגרים שלך, מה את/ה מחפש/ת במסע הקרוב, ומה תרצה שהצוות ידע עליך כדי לתמוך בך בתהליך *"
                         : "Tell us about your current life situation, your challenges, what you are looking for in your upcoming journey, and what you would like staff to know about you *"}
                     </label>
@@ -706,8 +749,10 @@ export default function RegisterPatientForm() {
                       }
                       rows={10}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      lang={locale}
+                      dir={isHebrew ? "rtl" : "ltr"}
                       placeholder={
-                        locale === "he"
+                        isHebrew
                           ? "שתף/י איתנו באופן פתוח ומפורט..."
                           : "Share with us openly and in detail..."
                       }
@@ -719,38 +764,41 @@ export default function RegisterPatientForm() {
 
               {/* Navigation Buttons */}
               <div className="flex justify-between mt-8 pt-6 border-t">
-                {currentStep > 0 && (
-                  <button
-                    type="button"
-                    onClick={prevStep}
-                    className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    {locale === "he" ? "הקודם" : "Previous"}
-                  </button>
-                )}
-
                 {currentStep < 3 ? (
                   <button
                     type="button"
                     onClick={nextStep}
                     disabled={currentStep === 0 && !formData.privacyConsent}
-                    className="mr-auto px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="ml-auto px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                    tabIndex={1}
                   >
-                    {locale === "he" ? "הבא" : "Next"}
+                    {isHebrew ? "הבא" : "Next"}
                   </button>
                 ) : (
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="mr-auto px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="ml-auto px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                    tabIndex={1}
                   >
                     {isSubmitting
-                      ? locale === "he"
+                      ? isHebrew
                         ? "שולח..."
                         : "Submitting..."
-                      : locale === "he"
+                      : isHebrew
                         ? "שלח טופס"
                         : "Submit Form"}
+                  </button>
+                )}
+
+                {currentStep > 0 && (
+                  <button
+                    type="button"
+                    onClick={prevStep}
+                    className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    tabIndex={2}
+                  >
+                    {isHebrew ? "הקודם" : "Previous"}
                   </button>
                 )}
               </div>
@@ -758,6 +806,42 @@ export default function RegisterPatientForm() {
           </div>
         </div>
       </div>
+
+      {/* Success Dialog */}
+      <Dialog open={submitSuccess} onOpenChange={() => {}}>
+        <DialogContent className="text-center">
+          <DialogHeader>
+            <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
+              <svg
+                className="h-6 w-6 text-green-600"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <DialogTitle>
+              {isHebrew
+                ? "הטופס נשלח בהצלחה!"
+                : "Form Submitted Successfully!"}
+            </DialogTitle>
+            <DialogDescription className="mt-2">
+              {isHebrew
+                ? "תודה על השלמת הטופס. נחזור אליך בהקדם האפשרי."
+                : "Thank you for submitting the form. We will get back to you as soon as possible."}
+            </DialogDescription>
+            <p className="text-sm text-gray-500 mt-4">
+              {isHebrew
+                ? "מעבירים אותך לדף הבית..."
+                : "Redirecting to home page..."}
+            </p>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

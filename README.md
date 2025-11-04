@@ -1,4 +1,4 @@
-# Arvut Tribe - Spiritual Retreats
+# The Tribe Guardians - Spiritual Retreats
 
 A bilingual Hebrew/English website for spiritual retreats with volunteer healer and patient registration forms.
 
@@ -32,8 +32,8 @@ A bilingual Hebrew/English website for spiritual retreats with volunteer healer 
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/DuduKova/arvut-tribe.git
-   cd arvut-tribe
+   git clone https://github.com/DuduKova/thetribeguardians.git
+   cd thetribeguardians
    ```
 
 2. **Install dependencies**

@@ -175,8 +175,13 @@ export async function sendEmailNotification(
   type: "healer" | "patient",
   data: HealerApplication | PatientRegistration,
 ) {
-  // TODO: Implement email notification via Supabase Edge Function
-  console.log(`Email notification for ${type}:`, data);
+  try {
+    const { sendFormSubmissionEmail } = await import("@/lib/email");
+    await sendFormSubmissionEmail(type, data);
+  } catch (error) {
+    // Log error but don't throw - email notification failure shouldn't block form submission
+    console.error("Failed to send email notification:", error);
+  }
 }
 
 export async function sendWhatsAppNotification(
