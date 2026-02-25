@@ -14,6 +14,7 @@ A bilingual Hebrew/English website for spiritual retreats with volunteer healer 
 
 - 🌍 **Bilingual Support**: Hebrew (primary) and English with URL-based routing
 - 📝 **Multi-step Forms**: Volunteer healer and patient registration forms
+- 🛠️ **Admin Panel**: Secure bilingual admin queue for reviewing submissions
 - 🎨 **Modern UI**: Beautiful components with shadcn/ui and Tailwind CSS
 - 📱 **Responsive**: Mobile-first design that works on all devices
 - 🔔 **Notifications**: Email and WhatsApp notifications for form submissions
@@ -46,16 +47,21 @@ A bilingual Hebrew/English website for spiritual retreats with volunteer healer 
    cp env.example .env.local
    ```
    
-   Fill in your Supabase credentials:
+   Fill in your required credentials:
    ```env
    NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+   ADMIN_EMAILS=admin1@example.com,admin2@example.com
    ```
 
 4. **Set up Supabase**
    - Create a new project at [supabase.com](https://supabase.com)
    - Copy your project URL and anon key to `.env.local`
-   - Run the database migration: `supabase/migrations/001_create_form_tables.sql`
+   - Run database migrations:
+     - `supabase/migrations/001_create_form_tables.sql`
+     - `supabase/migrations/002_extend_form_tables.sql`
+     - `supabase/migrations/003_create_admin_submissions_view.sql`
 
 5. **Run the development server**
    ```bash
@@ -70,15 +76,16 @@ A bilingual Hebrew/English website for spiritual retreats with volunteer healer 
 src/
 ├── app/
 │   └── [locale]/              # Internationalized routes
-│       ├── layout.tsx         # Root layout with i18n
-│       ├── page.tsx           # Homepage
-│       ├── volunteer-healer/  # Healer volunteer form
-│       └── register-patient/   # Patient registration form
+│       ├── layout.tsx         # Root locale + i18n provider
+│       ├── (site)/            # Public website routes
+│       ├── (admin)/admin/     # Admin login and protected queue
+│       └── auth/callback/     # Magic-link callback handler
 ├── components/
 │   ├── ui/                   # shadcn/ui components
 │   ├── LanguageSwitcher.tsx  # Language toggle component
-│   └── MultiStepForm.tsx     # Reusable multi-step form
+│   └── admin/                # Admin queue and detail panel UI
 ├── lib/
+│   ├── admin/               # Admin auth + shared types
 │   ├── supabase/            # Supabase configuration
 │   │   ├── client.ts        # Client-side Supabase
 │   │   ├── server.ts        # Server-side Supabase
@@ -116,6 +123,32 @@ Multi-step form with:
 
 Both forms store data in Supabase and send email/WhatsApp notifications.
 
+## 🔐 Admin Panel
+
+- Admin queue URL: `/{locale}/admin` (for example `http://localhost:3000/he/admin`)
+- Admin login URL: `/{locale}/admin/login`
+- Access control:
+  - User must be authenticated with Supabase magic link
+  - User email must exist in `ADMIN_EMAILS`
+- Supported admin actions (MVP):
+  - Unified queue for healer and patient submissions
+  - Filter/search/pagination
+  - Open full submission details (`form_data`)
+  - Update `status` (`pending` / `approved` / `rejected`)
+  - Edit single internal `notes` field
+
+### Magic Link Requirement (Supabase Auth)
+
+Enable email authentication in Supabase:
+
+1. Open Supabase Dashboard → **Authentication** → **Providers**
+2. Enable **Email** provider
+3. Configure your auth URL/site URL to your app domain
+4. Ensure redirect URLs include:
+   - `http://localhost:3000/he/auth/callback`
+   - `http://localhost:3000/en/auth/callback`
+   - Production equivalents for your deployed domain
+
 ## 🔧 Available Scripts
 
 - `npm run dev` - Start development server
@@ -136,9 +169,11 @@ Both forms store data in Supabase and send email/WhatsApp notifications.
 
 2. **Add environment variables**
    - In your Vercel dashboard, go to Settings > Environment Variables
-   - Add your Supabase credentials:
+   - Add required variables:
      - `NEXT_PUBLIC_SUPABASE_URL`
      - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+     - `SUPABASE_SERVICE_ROLE_KEY`
+     - `ADMIN_EMAILS`
 
 3. **Deploy**
    - Vercel will automatically deploy on every push to main
@@ -147,9 +182,14 @@ Both forms store data in Supabase and send email/WhatsApp notifications.
 
 1. **Create a new Supabase project**
 2. **Run database migrations**
-   - Execute `supabase/migrations/001_create_form_tables.sql`
+   - Execute:
+     - `supabase/migrations/001_create_form_tables.sql`
+     - `supabase/migrations/002_extend_form_tables.sql`
+     - `supabase/migrations/003_create_admin_submissions_view.sql`
 3. **Set up Row Level Security (RLS)**
    - Tables are configured with public insert policies for forms
+4. **Configure Auth**
+   - Enable Email provider for magic-link admin login
 
 ## 📱 WhatsApp Integration
 

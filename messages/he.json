@@ -84,6 +84,71 @@
       "required": "שדה חובה"
     }
   },
+  "admin": {
+    "layout": {
+      "title": "מערכת ניהול",
+      "subtitle": "ניהול טפסים",
+      "signOut": "התנתק"
+    },
+    "login": {
+      "title": "כניסת מנהל",
+      "description": "הזן אימייל מורשה לקבלת קישור כניסה מאובטח.",
+      "emailLabel": "אימייל",
+      "emailPlaceholder": "admin@example.com",
+      "submit": "שלח קישור כניסה",
+      "sending": "שולח...",
+      "success": "נשלח קישור כניסה למייל שלך.",
+      "errorGeneric": "לא הצלחנו לשלוח קישור כניסה. נסה שוב.",
+      "callbackError": "האימות נכשל. בקש קישור כניסה חדש.",
+      "forbiddenNotice": "החשבון מחובר אך אינו מורשה לגישה למערכת הניהול.",
+      "signOutCurrent": "התנתק מהחשבון הנוכחי"
+    },
+    "queue": {
+      "title": "תור בקשות",
+      "description": "סקירה וניהול של בקשות מטפלים ומטופלים.",
+      "searchPlaceholder": "חיפוש לפי שם, אימייל או טלפון",
+      "allTypes": "כל הסוגים",
+      "allStatuses": "כל הסטטוסים",
+      "typeHealer": "מטפל",
+      "typePatient": "מטופל",
+      "statusPending": "ממתין",
+      "statusApproved": "אושר",
+      "statusRejected": "נדחה",
+      "createdAt": "נשלח בתאריך",
+      "name": "שם",
+      "email": "אימייל",
+      "phone": "טלפון",
+      "type": "סוג",
+      "status": "סטטוס",
+      "open": "פתח",
+      "loading": "טוען בקשות...",
+      "empty": "לא נמצאו בקשות.",
+      "errorFallback": "לא ניתן לטעון את הבקשות.",
+      "pagination": "עמוד {page} מתוך {totalPages}",
+      "total": "{count} רשומות",
+      "prev": "הקודם",
+      "next": "הבא"
+    },
+    "detail": {
+      "title": "פרטי בקשה",
+      "close": "סגור",
+      "loading": "טוען פרטים...",
+      "errorFallback": "לא ניתן לטעון את פרטי הבקשה.",
+      "save": "שמור שינויים",
+      "saving": "שומר...",
+      "saved": "השינויים נשמרו.",
+      "status": "סטטוס",
+      "notes": "הערות פנימיות",
+      "notesPlaceholder": "הוסף הערות פנימיות לצוות...",
+      "submittedAt": "נשלח בתאריך",
+      "formData": "נתוני טופס מלאים",
+      "noData": "אין נתוני טופס זמינים."
+    },
+    "errors": {
+      "unauthorized": "פג תוקף ההתחברות. התחבר שוב.",
+      "forbidden": "החשבון מחובר אך אינו מורשה למערכת הניהול."
+    }
+  },
   "footer": {
     "contact": "צור קשר",
     "email": "אימייל",

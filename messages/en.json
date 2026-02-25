@@ -84,6 +84,71 @@
       "required": "Required field"
     }
   },
+  "admin": {
+    "layout": {
+      "title": "Admin Panel",
+      "subtitle": "Submission management",
+      "signOut": "Sign out"
+    },
+    "login": {
+      "title": "Admin Sign In",
+      "description": "Enter an allowlisted email to receive a secure magic link.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "admin@example.com",
+      "submit": "Send magic link",
+      "sending": "Sending...",
+      "success": "A sign-in link was sent to your email.",
+      "errorGeneric": "Unable to send magic link. Please try again.",
+      "callbackError": "Authentication failed. Request a new magic link.",
+      "forbiddenNotice": "This account is signed in but not allowlisted for admin access.",
+      "signOutCurrent": "Sign out current account"
+    },
+    "queue": {
+      "title": "Submissions Queue",
+      "description": "Review and manage healer and patient submissions.",
+      "searchPlaceholder": "Search by name, email, or phone",
+      "allTypes": "All types",
+      "allStatuses": "All statuses",
+      "typeHealer": "Healer",
+      "typePatient": "Patient",
+      "statusPending": "Pending",
+      "statusApproved": "Approved",
+      "statusRejected": "Rejected",
+      "createdAt": "Submitted at",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "type": "Type",
+      "status": "Status",
+      "open": "Open",
+      "loading": "Loading submissions...",
+      "empty": "No submissions found.",
+      "errorFallback": "Unable to load submissions.",
+      "pagination": "Page {page} of {totalPages}",
+      "total": "{count} records",
+      "prev": "Previous",
+      "next": "Next"
+    },
+    "detail": {
+      "title": "Submission Details",
+      "close": "Close",
+      "loading": "Loading details...",
+      "errorFallback": "Unable to load submission details.",
+      "save": "Save changes",
+      "saving": "Saving...",
+      "saved": "Changes saved.",
+      "status": "Status",
+      "notes": "Internal notes",
+      "notesPlaceholder": "Add internal team notes...",
+      "submittedAt": "Submitted at",
+      "formData": "Full form data",
+      "noData": "No form data available."
+    },
+    "errors": {
+      "unauthorized": "Your session expired. Please sign in again.",
+      "forbidden": "You are signed in but not authorized for admin access."
+    }
+  },
   "footer": {
     "contact": "Contact",
     "email": "Email",
