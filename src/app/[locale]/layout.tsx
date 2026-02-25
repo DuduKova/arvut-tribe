@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Playfair_Display, Lato } from "next/font/google";
 import "../globals.css";
 import Link from "next/link";
+import Image from "next/image";
 import { getTranslations, getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
@@ -40,11 +41,12 @@ export async function generateMetadata({
     ? "מסע ריפוי וצמיחה בתמיכה שבטית"
     : "A healing and growth journey with tribal support";
 
-  // Get base URL - update this with your actual domain
+  // Use deployed project URL as default metadata base.
   const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL || "https://your-domain.com";
+    process.env.NEXT_PUBLIC_SITE_URL || "https://tribe-guardians.vercel.app";
 
   return {
+    metadataBase: new URL(baseUrl),
     title,
     description,
     openGraph: {
@@ -54,9 +56,9 @@ export async function generateMetadata({
       siteName: isHebrew ? "שומרי השבט" : "Tribe Guardians",
       images: [
         {
-          url: "/og-image.jpg",
-          width: 1200,
-          height: 630,
+          url: "/branding/tribeg-logo.svg",
+          width: 1024,
+          height: 1024,
           alt: title,
         },
       ],
@@ -67,7 +69,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: ["/og-image.jpg"],
+      images: ["/branding/tribeg-logo.svg"],
     },
   };
 }
@@ -106,9 +108,18 @@ export default async function RootLayout({
                   <div className="flex items-center justify-between">
                     <Link
                       href={`/${locale}`}
-                      className="text-2xl font-bold text-gray-900"
+                      className="flex items-center gap-3"
                     >
-                      {t("organizationName")}
+                      <Image
+                        src="/branding/tribeg-logo.svg"
+                        alt={t("organizationName")}
+                        width={56}
+                        height={56}
+                        priority
+                      />
+                      <span className="text-lg md:text-2xl font-bold text-gray-900">
+                        {t("organizationName")}
+                      </span>
                     </Link>
 
                     <nav className="hidden md:flex items-center space-x-6">
@@ -147,7 +158,15 @@ export default async function RootLayout({
                 <div className="container mx-auto px-4">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div dir={isHebrew ? "rtl" : "ltr"} className={isHebrew ? "text-right" : "text-left"}>
-                      <h3 className="text-lg font-semibold mb-4">{tFooter("organizationName")}</h3>
+                      <div className="flex items-center gap-3 mb-4">
+                        <Image
+                          src="/branding/tribeg-logo.svg"
+                          alt={tFooter("organizationName")}
+                          width={52}
+                          height={52}
+                        />
+                        <h3 className="text-lg font-semibold">{tFooter("organizationName")}</h3>
+                      </div>
                       <p className="text-gray-300">
                         
                       </p>

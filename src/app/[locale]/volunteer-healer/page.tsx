@@ -26,6 +26,7 @@ export default function VolunteerHealerForm() {
   const [formData, setFormData] = useState({
     // Step 1: Personal & Professional Background
     fullName: "",
+    gender: "",
     age: "",
     mainProfession: "",
     treatments: "",
@@ -117,11 +118,11 @@ export default function VolunteerHealerForm() {
 
     try {
       // Basic validation
-      if (!formData.fullName || !formData.contactPhone) {
+      if (!formData.fullName || !formData.gender || !formData.contactPhone || !formData.contactEmail) {
         setSubmitError(
           isHebrew
-            ? "שם מלא ומספר טלפון הם שדות חובה"
-            : "Full name and phone number are required",
+            ? "שם מלא, מין, אימייל ומספר טלפון הם שדות חובה"
+            : "Full name, gender, email, and phone number are required",
         );
         setIsSubmitting(false);
         return;
@@ -289,6 +290,24 @@ export default function VolunteerHealerForm() {
                       }
                       required
                     />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      {isHebrew ? "מין *" : "Gender *"}
+                    </label>
+                    <select
+                      value={formData.gender}
+                      onChange={(e) => updateField("gender", e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                      required
+                    >
+                      <option value="">
+                        {isHebrew ? "בחר/י מין" : "Select gender"}
+                      </option>
+                      <option value="male">{isHebrew ? "זכר" : "Male"}</option>
+                      <option value="female">{isHebrew ? "נקבה" : "Female"}</option>
+                    </select>
                   </div>
 
                   <div>

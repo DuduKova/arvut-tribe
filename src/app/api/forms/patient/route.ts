@@ -11,9 +11,9 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
 
     // Validate required fields
-    if (!body.fullName || !body.phone) {
+    if (!body.fullName || !body.phone || !body.email || !body.gender) {
       return NextResponse.json(
-        { error: "שם מלא ומספר טלפון הם שדות חובה" },
+        { error: "שם מלא, מין, אימייל ומספר טלפון הם שדות חובה" },
         { status: 400 },
       );
     }
@@ -29,7 +29,9 @@ export async function POST(request: NextRequest) {
     // Map form data to PatientRegistration interface
     const patientData: PatientRegistration = {
       fullName: body.fullName || "",
+      gender: body.gender || "",
       age: body.age || "",
+      email: body.email || "",
       phone: body.phone || "",
       city: body.city || "",
       chronicIllnesses: body.chronicIllnesses || "",

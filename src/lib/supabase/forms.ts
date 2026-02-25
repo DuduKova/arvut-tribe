@@ -3,6 +3,7 @@ import { createServiceClient } from "@/lib/supabase/server";
 export interface HealerApplication {
   // Personal & Professional Background
   fullName: string;
+  gender: string;
   age: string;
   mainProfession: string;
   treatments: string;
@@ -28,7 +29,9 @@ export interface HealerApplication {
 export interface PatientRegistration {
   // Personal Details
   fullName: string;
+  gender: string;
   age: string;
+  email: string;
   phone: string;
   city: string;
   // Medical Background
@@ -58,6 +61,7 @@ export async function submitHealerApplication(data: HealerApplication) {
   const formData = {
     // Personal & Professional Background
     fullName: data.fullName,
+    gender: data.gender,
     age: data.age,
     mainProfession: data.mainProfession,
     treatments: data.treatments,
@@ -113,7 +117,9 @@ export async function submitPatientRegistration(data: PatientRegistration) {
   const formData = {
     // Personal Details
     fullName: data.fullName,
+    gender: data.gender,
     age: data.age,
+    email: data.email,
     phone: data.phone,
     city: data.city,
     // Medical Background
@@ -153,7 +159,7 @@ export async function submitPatientRegistration(data: PatientRegistration) {
     .insert([
       {
         name: data.fullName,
-        email: "", // Patient form doesn't have email field
+        email: data.email,
         phone: data.phone,
         health_background: healthBackground,
         preferences: data.reasonForHealing || "Not provided",
@@ -212,6 +218,7 @@ export async function sendWhatsAppNotification(
       message = `🔔 בקשה חדשה להתנדבות כמרפא
 
 שם: ${healerData.fullName}
+מין: ${healerData.gender === "female" ? "נקבה" : "זכר"}
 גיל: ${healerData.age}
 טלפון: ${healerData.contactPhone || "לא צוין"}
 אימייל: ${healerData.contactEmail || "לא צוין"}
@@ -231,7 +238,9 @@ ${experienceSummary}
       message = `🔔 הרשמה חדשה כמטופל
 
 שם: ${patientData.fullName}
+מין: ${patientData.gender === "female" ? "נקבה" : "זכר"}
 גיל: ${patientData.age}
+אימייל: ${patientData.email}
 טלפון: ${patientData.phone}
 עיר: ${patientData.city || "לא צוין"}
 

@@ -82,6 +82,10 @@ function formatHealerEmailHTML(data: HealerApplication): string {
         <div class="field-value">${data.fullName || "לא צוין"}</div>
       </div>
       <div class="field">
+        <div class="field-label">מין:</div>
+        <div class="field-value">${data.gender === "female" ? "נקבה" : "זכר"}</div>
+      </div>
+      <div class="field">
         <div class="field-label">גיל:</div>
         <div class="field-value">${data.age || "לא צוין"}</div>
       </div>
@@ -249,8 +253,16 @@ function formatPatientEmailHTML(data: PatientRegistration): string {
         <div class="field-value">${data.fullName || "לא צוין"}</div>
       </div>
       <div class="field">
+        <div class="field-label">מין:</div>
+        <div class="field-value">${data.gender === "female" ? "נקבה" : "זכר"}</div>
+      </div>
+      <div class="field">
         <div class="field-label">גיל:</div>
         <div class="field-value">${data.age || "לא צוין"}</div>
+      </div>
+      <div class="field">
+        <div class="field-label">אימייל:</div>
+        <div class="field-value">${data.email || "לא צוין"}</div>
       </div>
       <div class="field">
         <div class="field-label">טלפון:</div>
@@ -376,4 +388,3 @@ export async function sendFormSubmissionEmail(
     console.error("Failed to send email notification:", error);
   }
 }
-

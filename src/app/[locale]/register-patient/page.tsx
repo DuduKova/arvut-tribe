@@ -26,7 +26,9 @@ export default function RegisterPatientForm() {
   const [formData, setFormData] = useState({
     // Step 1: Personal Details
     fullName: "",
+    gender: "",
     age: "",
+    email: "",
     phone: "",
     city: "",
     // Step 2: Medical Background
@@ -118,11 +120,11 @@ export default function RegisterPatientForm() {
 
     try {
       // Basic validation
-      if (!formData.fullName || !formData.phone) {
+      if (!formData.fullName || !formData.phone || !formData.email || !formData.gender) {
         setSubmitError(
           isHebrew
-            ? "שם מלא ומספר טלפון הם שדות חובה"
-            : "Full name and phone number are required",
+            ? "שם מלא, מין, אימייל ומספר טלפון הם שדות חובה"
+            : "Full name, gender, email, and phone number are required",
         );
         setIsSubmitting(false);
         return;
@@ -351,6 +353,38 @@ export default function RegisterPatientForm() {
                       placeholder={
                         isHebrew ? "הכנס את גילך" : "Enter your age"
                       }
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      {isHebrew ? "מין *" : "Gender *"}
+                    </label>
+                    <select
+                      value={formData.gender}
+                      onChange={(e) => updateField("gender", e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                      required
+                    >
+                      <option value="">
+                        {isHebrew ? "בחר/י מין" : "Select gender"}
+                      </option>
+                      <option value="male">{isHebrew ? "זכר" : "Male"}</option>
+                      <option value="female">{isHebrew ? "נקבה" : "Female"}</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      {isHebrew ? "אימייל *" : "Email *"}
+                    </label>
+                    <input
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => updateField("email", e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      placeholder="example@email.com"
                       required
                     />
                   </div>

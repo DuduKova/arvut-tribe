@@ -11,9 +11,9 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
 
     // Validate required fields
-    if (!body.fullName || !body.contactPhone) {
+    if (!body.fullName || !body.gender || !body.contactEmail || !body.contactPhone) {
       return NextResponse.json(
-        { error: "שם מלא ומספר טלפון הם שדות חובה" },
+        { error: "שם מלא, מין, אימייל ומספר טלפון הם שדות חובה" },
         { status: 400 },
       );
     }
@@ -21,6 +21,7 @@ export async function POST(request: NextRequest) {
     // Map form data to HealerApplication interface
     const healerData: HealerApplication = {
       fullName: body.fullName || "",
+      gender: body.gender || "",
       age: body.age || "",
       mainProfession: body.mainProfession || "",
       treatments: body.treatments || "",
