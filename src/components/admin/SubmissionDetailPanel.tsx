@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { buildReadableFormSections } from "@/lib/admin/formDataPresentation";
 import type {
   AdminSubmissionDetail,
   SubmissionStatus,
@@ -202,6 +203,9 @@ export default function SubmissionDetailPanel({
     approved: tQueue("statusApproved"),
     rejected: tQueue("statusRejected"),
   };
+  const readableFormSections = detail
+    ? buildReadableFormSections(detail.submissionType, detail.formData, locale)
+    : [];
 
   return (
     <div className="fixed inset-0 z-50">
@@ -308,10 +312,30 @@ export default function SubmissionDetailPanel({
 
             <div className="rounded-lg border p-4">
               <h3 className="mb-3 text-sm font-semibold text-gray-900">{tDetail("formData")}</h3>
-              {detail.formData ? (
-                <pre className="overflow-x-auto rounded-md bg-gray-50 p-3 text-xs text-gray-800">
-                  {JSON.stringify(detail.formData, null, 2)}
-                </pre>
+              {readableFormSections.length > 0 ? (
+                <div className="space-y-4">
+                  {readableFormSections.map((section) => (
+                    <section key={section.id} className="space-y-2">
+                      <h4 className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                        {section.title}
+                      </h4>
+                      <dl className="space-y-3 rounded-md bg-gray-50 p-3">
+                        {section.fields.map((field) => (
+                          <div key={field.key} className="space-y-1 md:grid md:grid-cols-[13rem_1fr] md:gap-4">
+                            <dt className="text-xs font-medium text-gray-600">{field.label}</dt>
+                            <dd
+                              className={`text-sm text-gray-900 whitespace-pre-wrap break-words ${
+                                field.isStructuredValue ? "font-mono text-xs leading-relaxed" : ""
+                              }`}
+                            >
+                              {field.value}
+                            </dd>
+                          </div>
+                        ))}
+                      </dl>
+                    </section>
+                  ))}
+                </div>
               ) : (
                 <p className="text-sm text-gray-600">{tDetail("noData")}</p>
               )}
