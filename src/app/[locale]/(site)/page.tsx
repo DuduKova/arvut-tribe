@@ -265,7 +265,10 @@ export default async function HomePage({ params }: PageProps) {
             </h1>
             <p className="mt-6 max-w-2xl text-xl leading-9 text-white/90 md:text-2xl">
               A healing journey for fighters and veterans, blending clinical care,
-              community support, and Amazonian medicine.
+              community support, and Amazonian medicine. The journey begins about
+              two months before departure to Peru, with intake interviews that
+              help align expectations and a multidisciplinary team that works
+              through the same holistic care model.
             </p>
             <div className="mt-10 flex flex-wrap justify-center gap-4">
               <Link
@@ -291,7 +294,9 @@ export default async function HomePage({ params }: PageProps) {
             </h2>
             <p className="mt-4 text-base leading-8 text-[#6b6450]">
               Use the applicant form if you are seeking support, or the facilitator
-              form if you want to join the care team.
+              form if you want to join the care team and help shape a holistic
+              healing model. The process starts about two months before departure
+              to Peru.
             </p>
             <div className="mt-8 grid gap-4 md:grid-cols-2">
               <Link
@@ -347,7 +352,7 @@ export default async function HomePage({ params }: PageProps) {
     },
     {
       title: "מיקוד ארוך-טווח",
-      description: "המסע מתחיל בהכנה של חודשיים בישראל, ונמשך עם תוכנית אינטגרציה של 6 חודשים מלאים לאחר החזרה.",
+      description: "המסע מתחיל בהכנה של כחודשיים בישראל, ונמשך עם תוכנית אינטגרציה של 6 חודשים מלאים לאחר החזרה.",
       icon: (
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
           <path d="M16 4 L28 26 L4 26 Z" />
@@ -374,11 +379,11 @@ export default async function HomePage({ params }: PageProps) {
       badge: "ישראל · 6 שבועות",
       title: "הכנה",
       items: [
-        { title: "ראיונות אישיים", description: "הערכה קלינית עמוקה לבדיקת מועמדות ויישור ציפיות." },
+        { title: "ראיונות אישיים", description: "הערכה קלינית עמוקה לבדיקת מועמדות ותיאום ציפיות." },
         { title: "פגישות קבוצתיות", description: "בניית אמון ואינטימיות \"שבטית\" לפני היציאה." },
         { title: "ניקוי קמבו", description: "שיטה אמזונית לא-פסיכואקטיבית לניקוי פיזי ואנרגטי. מכינה את הגוף והנפש לעבודה העמוקה.", plant: true },
-        { title: "עבודת נשימה (ריבורת'ינג)", description: "לוויסות סומטי וגישה לרגשות מגולמים." },
-        { title: "שיחות קבוצתיות ואישיות", description: "בהנחיית פסיכולוגים קליניים ליצירת מיכל בטוח." },
+        { title: "עבודת נשימה (ריברסינג)", description: "לוויסות סומטי וגישה לרגשות מודחקים." },
+        { title: "שיחות קבוצתיות ואישיות", description: "בהנחיית פסיכולוגים קליניים ליצירת מיכל בטוח ומגע ראשוני בתכנים נפשיים." },
       ],
     },
     {
@@ -390,7 +395,7 @@ export default async function HomePage({ params }: PageProps) {
       highlight: true,
       items: [
         { title: "איוואסקה וצמחי רפואה אמזוניים", description: "נפגוש את האיוואסקה לצד צמחים רפואיים נוספים מהאמזונס, שמטרתם ניקוי סומטי, המתקה רגשית ופתיחת הלב. תהליכים חזקים עם אפקט ריפוי עמוק.", plant: true },
-        { title: "אינטגרציה יומית", description: "פגישות קבוצתיות ואישיות עם מטפלים קליניים לעיבוד מה שעולה בתהליך." },
+        { title: "אינטגרציה יומית", description: "פגישות קבוצתיות ואישיות עם מטפלים קליניים לעיבוד התכנים העולים בתהליך." },
         { title: "פעילויות הוליסטיות", description: "תנועה, בישול משותף, יצירה משותפת." },
         { title: "טיפולי גוף אישיים", description: "תמיכה בשחרור פיזי ורגשי לאורך השהייה." },
       ],
@@ -404,8 +409,6 @@ export default async function HomePage({ params }: PageProps) {
         { title: "אינטגרציה אישית", description: "פגישות שבועיות אישיות לעיבוד וליווי תהליך האינטגרציה." },
         { title: "מעגלי אינטגרציה קבוצתיים", description: "6 מפגשי אינטגרציה קבוצתיים עם חברי השבט לאורך תקופת האינטגרציה." },
         { title: "מפגשי בוגרים קבוצתיים", description: "מפגשים עם בוגרי ריטריטים קודמים לשמירה על קשר, שיתוף וחיזוק הדדי לאורך זמן." },
-        { title: "קווי סיוע מקצועיים", description: "גישה לתמיכה טיפולית מקצועית בין הפגישות." },
-        { title: "מעקב השפעה", description: "ניטור מדויק של שיפור בבריאות הנפש ואיכות החיים." },
       ],
     },
   ];
@@ -569,39 +572,22 @@ export default async function HomePage({ params }: PageProps) {
         <section className="bg-[#faf7f2] py-20 md:py-32">
           <div className="mx-auto grid w-full max-w-[1200px] gap-12 px-4 md:px-6 lg:grid-cols-[1fr_1fr] lg:items-center">
             <div>
-              <SectionHeading
-                label="הפער"
-                title="הטיפולים הקונבנציונליים לרוב אינם מגיעים לשורש"
-                intro="הפסיכולוגיה המערבית המסורתית לרוב מנהלת סימפטומים אך מתקשה להגיע לטראומה השורשית המאוחסנת בגוף ובתת-המודע. התוצאה: לוחמים רבים נותרים במצב של ניהול כרוני של סימפטומים, ואינם מסוגלים לשוב לתפקד במלואם בחיים ובמשפחה."
-                align="start"
-              />
+            <SectionHeading
+              label="הפער"
+              title="הטיפולים הקונבנציונליים לרוב אינם מגיעים לשורש"
+              intro="הפסיכולוגיה המערבית המסורתית לרוב מנהלת סימפטומים אך מתקשה להגיע לטראומה השורשית המאוחסנת בגוף ובתת-המודע. התוצאה: לוחמים רבים נותרים במצב של ניהול כרוני של סימפטומים, ואינם מסוגלים לשוב לתפקד במלואם בחברה ובמשפחה."
+              align="start"
+            />
               <p className="mt-6 text-base leading-8 text-[#6b6450]">
                 זו מגבלה של הכלים הזמינים.
               </p>
             </div>
 
             <div className="rounded-[1.75rem] border border-[#cec4a8] bg-[#f5f0e8] p-6 shadow-[0_10px_30px_rgba(30,37,24,0.08)]">
-              <div className="flex items-center gap-0">
-                <div className="flex h-24 w-24 items-center justify-center rounded-2xl bg-[#8b5e3c] font-primary text-xl font-black text-white">
-                  טראומה
-                </div>
-                <div className="flex-1 px-4">
-                  <div className="space-y-2">
-                    <div className="rounded-lg border border-[#d8ceb8] bg-[#ede6d8] px-4 py-2 text-center text-xs text-[#6b6450] shadow-sm -rotate-1">
-                      ניהול סימפטומים
-                    </div>
-                    <div className="rounded-lg border border-[#d8ceb8] bg-[#ede6d8] px-4 py-2 text-center text-xs text-[#6b6450] shadow-sm rotate-1">
-                      תרופות בלבד
-                    </div>
-                    <div className="rounded-lg border border-[#d8ceb8] bg-[#ede6d8] px-4 py-2 text-center text-xs text-[#6b6450] shadow-sm -rotate-1">
-                      שיחות טיפול לבד
-                    </div>
-                  </div>
-                </div>
-                <div className="flex h-24 w-24 items-center justify-center rounded-2xl bg-[#2d4a2d] font-primary text-xl font-black text-white">
-                  ריפוי
-                </div>
-              </div>
+              <p className="text-base leading-8 text-[#6b6450]">
+                המגבלה של הכלים הזמינים היא שהם מנהלים סימפטומים, מסתמכים על תרופות בלבד
+                או על שיח בלבד, ולא נותנים מענה הוליסטי מקיף שמטפל בבעיה משורשה.
+              </p>
             </div>
           </div>
         </section>
@@ -668,7 +654,7 @@ export default async function HomePage({ params }: PageProps) {
               <SectionHeading
                 label="התוכנית"
                 title="המסע הקליני: שלושה שלבים"
-                intro="המסע שלנו מתחיל חודשים לפני הריטריט ונמשך חצי שנה אחריו. זוהי התחייבות ארוכת-טווח לריפוי עמוק."
+                intro="המסע שלנו מתחיל כחודשיים לפני היציאה לפרו, ונמשך חצי שנה אחריו. זוהי התחייבות ארוכת-טווח לריפוי עמוק."
               />
             </div>
 
@@ -735,22 +721,18 @@ export default async function HomePage({ params }: PageProps) {
                   אנחנו לא רק מטפלים. אנחנו לומדים.
                 </h3>
                 <p className="mt-5 text-base leading-8 text-[#6b6450]">
-                  אנחנו מבצעים מחקר פנימי שיתפתח בהמשך לשיתופי פעולה עם חוקרים אקדמאיים. המטרה: ללמוד, לשפר, ולאפשר לחיילים נוספים ליהנות מהמודל הזה.
+                  אנחנו מבצעים מחקר פנימי שיתפתח בהמשך לשיתופי פעולה עם חוקרים אקדמאיים. המטרה: ללמוד, לשפר, לקבל הכרה, מימון, ולאפשר לכמה שיותר מטופלים לקבל מענה.
                 </p>
 
-                <div className="mt-8 grid gap-4 sm:grid-cols-3">
+                <div className="mt-8 grid gap-4 sm:grid-cols-2">
                   {[
-                    {
-                      title: "מדדים",
-                      text: "מעקב מT0 (לפני הריטריט) עד T3 (שנה לאחר האינטגרציה)",
-                    },
                     {
                       title: "כלים",
                       text: "עיצוב רב-מודאלי: פסיכולוגי, פיזי, ביולוגי וחברתי. כלים קליניים, חיישנים, סמנים ביולוגיים",
                     },
                     {
                       title: "מטרה",
-                      text: "להעמיק את ההבנה של מה שעובד, ולאפשר לכמה שיותר חיילים לגשת לדרך ריפוי שמשנה חיים",
+                      text: "להעמיק את ההבנה של מה שעובד, ולאפשר לכמה שיותר מטופלים לקבל מענה שמשנה חיים",
                     },
                   ].map((item) => (
                     <div key={item.title} className="rounded-2xl bg-[#faf7f2] p-5 shadow-sm">
