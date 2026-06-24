@@ -2,6 +2,9 @@
 
 @layer base {
   :root {
+    --font-primary: "Frank Ruhl Libre", Georgia, serif;
+    --font-secondary: "Heebo", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
     /* Ayahuasca Design System - Color Palette */
     
     /* Base Colors - Ayahuasca Palette */

@@ -1,22 +1,8 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Lato } from "next/font/google";
 import "../globals.css";
 import { getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
-
-const playfairDisplay = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-primary",
-  display: "swap",
-});
-
-const lato = Lato({
-  subsets: ["latin"],
-  weight: ["300", "400", "700"],
-  variable: "--font-secondary",
-  display: "swap",
-});
 
 const locales = ["he", "en"] as const;
 
@@ -33,11 +19,11 @@ export async function generateMetadata({
   const isHebrew = locale === "he";
 
   const title = isHebrew
-    ? "שומרי השבט - שליחת טפסים"
-    : "Tribe Guardians - Submit Forms";
+    ? "שומרי השבט - מסע ריפוי משולב"
+    : "Tribe Guardians - Integrated Healing Journey";
   const description = isHebrew
-    ? "מסע ריפוי וצמיחה בתמיכה שבטית"
-    : "A healing and growth journey with tribal support";
+    ? "דרך ריפוי קלינית ומשולבת לחיילים וללוחמים"
+    : "A clinically supported healing journey for fighters and veterans";
 
   // Use deployed project URL as default metadata base.
   const baseUrl =
@@ -54,7 +40,7 @@ export async function generateMetadata({
       siteName: isHebrew ? "שומרי השבט" : "Tribe Guardians",
       images: [
         {
-          url: "/branding/tribeg-logo.svg",
+          url: "/tribe-guardians/logo.jpg",
           width: 1024,
           height: 1024,
           alt: title,
@@ -67,7 +53,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: ["/branding/tribeg-logo.svg"],
+      images: ["/tribe-guardians/logo.jpg"],
     },
   };
 }
@@ -90,9 +76,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} dir={isHebrew ? "rtl" : "ltr"}>
-      <body
-        className={`${playfairDisplay.variable} ${lato.variable} font-secondary`}
-      >
+      <body className="font-secondary">
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
         </NextIntlClientProvider>
