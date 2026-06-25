@@ -3,8 +3,15 @@ import "../globals.css";
 import { getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
+import { Heebo } from "next/font/google";
 
 const locales = ["he", "en"] as const;
+
+const heebo = Heebo({
+  subsets: ["hebrew", "latin"],
+  display: "swap",
+  variable: "--font-heebo",
+});
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -75,8 +82,12 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} dir={isHebrew ? "rtl" : "ltr"}>
-      <body className="font-secondary">
+    <html
+      lang={locale}
+      dir={isHebrew ? "rtl" : "ltr"}
+      className={heebo.variable}
+    >
+      <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
         </NextIntlClientProvider>
