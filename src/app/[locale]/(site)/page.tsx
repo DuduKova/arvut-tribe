@@ -1,31 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import {
+  homepageContent,
+  type HomepageIcon,
+  type Phase,
+  type PhaseItem,
+  type Stat,
+  type SupportedLocale,
+} from "./homepageContent";
 
 type PageProps = {
   params: Promise<{ locale: string }>;
-};
-
-type Stat = {
-  value: string;
-  label: string;
-  highlight?: boolean;
-};
-
-type PhaseItem = {
-  title: string;
-  description: string;
-  plant?: boolean;
-};
-
-type Phase = {
-  number: string;
-  badge: string;
-  title: string;
-  intro?: string;
-  image?: string;
-  highlight?: boolean;
-  items: PhaseItem[];
 };
 
 function SectionHeading({
@@ -165,7 +151,7 @@ function PhaseCard({ phase }: { phase: Phase }) {
         <div className="relative h-64 overflow-hidden">
           <Image
             src={phase.image}
-            alt={phase.title}
+            alt={phase.imageAlt ?? phase.title}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
@@ -187,6 +173,92 @@ function PhaseCard({ phase }: { phase: Phase }) {
       </div>
     </article>
   );
+}
+
+function ContentIcon({
+  name,
+  size = 32,
+}: {
+  name: HomepageIcon;
+  size?: 32 | 40;
+}) {
+  const commonProps = {
+    width: size,
+    height: size,
+    viewBox: size === 40 ? "0 0 40 40" : "0 0 32 32",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.5,
+  };
+
+  switch (name) {
+    case "safe":
+      return (
+        <svg {...commonProps}>
+          <circle cx="16" cy="16" r="14" />
+          <path
+            d="M16 8 C10 12, 8 18, 12 22 C14 24, 16 23, 16 20 C16 23, 18 24, 20 22 C24 18, 22 12, 16 8Z"
+            fill="currentColor"
+            opacity="0.7"
+            stroke="none"
+          />
+        </svg>
+      );
+    case "longTerm":
+      return (
+        <svg {...commonProps}>
+          <path d="M16 4 L28 26 L4 26 Z" />
+          <circle cx="16" cy="17" r="4" />
+        </svg>
+      );
+    case "community":
+      return (
+        <svg {...commonProps}>
+          <circle cx="11" cy="11" r="6" />
+          <circle cx="21" cy="11" r="6" />
+          <circle cx="16" cy="21" r="6" />
+        </svg>
+      );
+    case "legal":
+      return (
+        <svg {...commonProps}>
+          <rect x="8" y="4" width="24" height="32" rx="3" />
+          <path d="M14 14h12M14 20h12M14 26h8" />
+          <path d="M24 2v5M16 2v5" />
+        </svg>
+      );
+    case "medical":
+      return (
+        <svg {...commonProps}>
+          <path d="M20 4 L34 12 L34 22 C34 30, 20 36, 20 36 C20 36, 6 30, 6 22 L6 12 Z" />
+          <path d="M14 20 l4 4 l8 -8" />
+        </svg>
+      );
+    case "ethics":
+      return (
+        <svg {...commonProps}>
+          <path d="M20 4 C12 10, 6 18, 10 26 C13 32, 17 34, 20 34 C23 34, 27 32, 30 26 C34 18, 28 10, 20 4Z" />
+          <circle cx="20" cy="20" r="5" />
+        </svg>
+      );
+    case "applicant":
+      return (
+        <svg {...commonProps}>
+          <circle cx="16" cy="10" r="5" />
+          <path d="M6 28 C6 22, 10 18, 16 18 C22 18, 26 22, 26 28" />
+        </svg>
+      );
+    case "facilitator":
+      return (
+        <svg {...commonProps}>
+          <circle cx="12" cy="10" r="4" />
+          <path d="M4 26 C4 21, 7.5 18, 12 18" />
+          <circle cx="22" cy="12" r="4" />
+          <path d="M22 18 C26.5 18, 28 21, 28 26" />
+          <path d="M14 22 L19 22 M16.5 19.5 L16.5 24.5" />
+        </svg>
+      );
+  }
 }
 
 function ApplyCard({
@@ -252,286 +324,8 @@ function ApplyCard({
 
 export default async function HomePage({ params }: PageProps) {
   const { locale } = await params;
-
-  if (locale !== "he") {
-    return (
-      <div className="relative overflow-hidden">
-        <section className="relative isolate min-h-[72vh] overflow-hidden">
-          <div className="absolute inset-0">
-            <Image
-              src="/tribe-guardians/hero.jpg"
-              alt="Tribe Guardians hero"
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover object-center"
-            />
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,10,4,0.55)_0%,rgba(6,10,4,0.7)_55%,rgba(4,8,2,0.86)_100%)]" />
-          </div>
-
-          <div className="relative z-10 mx-auto flex min-h-[72vh] max-w-4xl flex-col items-center justify-center px-4 py-24 text-center text-white md:px-6">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-white/65">
-              Clinically supported healing
-            </p>
-            <h1 className="mt-5 font-primary text-[clamp(3.5rem,9vw,6rem)] font-black leading-none tracking-[-0.05em]">
-              Tribe Guardians
-            </h1>
-            <p className="mt-6 max-w-2xl text-xl leading-9 text-white/90 md:text-2xl">
-              A healing journey for fighters and veterans, blending clinical
-              care, community support, and Amazonian medicine. The journey
-              begins about two months before departure to Peru, with intake
-              interviews that help align expectations and a multidisciplinary
-              team that works through the same holistic care model.
-            </p>
-            <div className="mt-10 flex flex-wrap justify-center gap-4">
-              <Link
-                href={`/${locale}/register-patient`}
-                className="rounded-full border border-[#2d4a2d] bg-[#2d4a2d] px-8 py-3 text-sm font-bold text-[#f4eedc] transition-transform duration-200 hover:-translate-y-0.5"
-              >
-                Applicant Questionnaire
-              </Link>
-              <Link
-                href={`/${locale}/volunteer-healer`}
-                className="rounded-full border border-white/40 bg-white/10 px-8 py-3 text-sm font-bold text-white transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/15"
-              >
-                Facilitator Questionnaire
-              </Link>
-            </div>
-          </div>
-        </section>
-      </div>
-    );
-  }
-
-  const stats: Stat[] = [
-    {
-      value: "87,000+",
-      label:
-        "פצועי נפש שטופלו על ידי משרד הביטחון, עלייה חדה מ-62,000 לפני שנה",
-      highlight: true,
-    },
-    {
-      value: "58%",
-      label: "מהפצועים החדשים מאז 7 באוקטובר סובלים מפגיעה נפשית",
-    },
-    {
-      value: "100,000",
-      label: "פצועים צפויים עד 2028. לפחות מחציתם עם PTSD",
-    },
-    {
-      value: "×10",
-      label:
-        "גידול במוכרים בביטוח לאומי בשל פציעות נפש: מ-6,400 לפני המלחמה לכ-69,000 כיום",
-      highlight: true,
-    },
-  ];
-
-  const pillars = [
-    {
-      title: "מיכל בטוח",
-      description:
-        "בהובלת פסיכולוגים קליניים ומרפאים מנוסים, בתוך מסגרת רציפה ותומכת.",
-      icon: (
-        <svg
-          width="32"
-          height="32"
-          viewBox="0 0 32 32"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        >
-          <circle cx="16" cy="16" r="14" />
-          <path
-            d="M16 8 C10 12, 8 18, 12 22 C14 24, 16 23, 16 20 C16 23, 18 24, 20 22 C24 18, 22 12, 16 8Z"
-            fill="currentColor"
-            opacity="0.7"
-            stroke="none"
-          />
-        </svg>
-      ),
-    },
-    {
-      title: "מיקוד ארוך-טווח",
-      description:
-        "רצף טיפולי שמחבר הכנה, עבודה עמוקה בפרו והטמעה בחיי היום-יום.",
-      icon: (
-        <svg
-          width="32"
-          height="32"
-          viewBox="0 0 32 32"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        >
-          <path d="M16 4 L28 26 L4 26 Z" />
-          <circle cx="16" cy="17" r="4" />
-        </svg>
-      ),
-    },
-    {
-      title: "קהילה ושבט",
-      description:
-        'יצירת "שבט" תמיכה שנמשך לכל החיים. אתם לא עושים את הדרך הזו לבד.',
-      icon: (
-        <svg
-          width="32"
-          height="32"
-          viewBox="0 0 32 32"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        >
-          <circle cx="11" cy="11" r="6" />
-          <circle cx="21" cy="11" r="6" />
-          <circle cx="16" cy="21" r="6" />
-        </svg>
-      ),
-    },
-  ];
-
-  const phases: Phase[] = [
-    {
-      number: "01",
-      badge: "ישראל · 6 שבועות",
-      title: "הכנה",
-      items: [
-        {
-          title: "ראיונות אישיים",
-          description: "הערכה קלינית עמוקה לבדיקת מועמדות ותיאום ציפיות.",
-        },
-        {
-          title: "פגישות קבוצתיות",
-          description: 'בניית אמון ואינטימיות "שבטית" לפני היציאה.',
-        },
-        {
-          title: "ניקוי קמבו",
-          description:
-            "טקס אמזוני מסורתי לא-פסיכואקטיבי, המוצע רק לאחר בחינת התאמה ובהתאם לפרוטוקולי הבטיחות.",
-          plant: true,
-        },
-        {
-          title: "עבודת נשימה (ריברסינג)",
-          description: "לוויסות סומטי וגישה לרגשות מודחקים.",
-        },
-        {
-          title: "שיחות קבוצתיות ואישיות",
-          description:
-            "בהנחיית פסיכולוגים קליניים ליצירת מיכל בטוח ומגע ראשוני בתכנים נפשיים.",
-        },
-      ],
-    },
-    {
-      number: "02",
-      badge: "פרו · 14 יום",
-      title: "ריטריט רפואה אמזונית בפרו",
-      intro:
-        "במשך שבועיים נצא מהרעש של העולם המודרני ונכנס לתוך יער האמזונס הפרואני. סביבה מאובטחת ומבודדת, עם תמיכה רציפה של הצוות.",
-      image: "/tribe-guardians/img_maloka.jpg",
-      highlight: true,
-      items: [
-        {
-          title: "איוואסקה וצמחי רפואה אמזוניים",
-          description:
-            "המפגש עם איוואסקה וצמחים אמזוניים נוספים מתקיים כחלק מהמסגרת המסורתית של הריטריט, לאחר מיון והכנה ובליווי הצוות.",
-          plant: true,
-        },
-        {
-          title: "אינטגרציה יומית",
-          description:
-            "פגישות קבוצתיות ואישיות עם מטפלים קליניים לעיבוד התכנים העולים בתהליך.",
-        },
-        {
-          title: "פעילויות הוליסטיות",
-          description: "תנועה, בישול משותף, יצירה משותפת.",
-        },
-        {
-          title: "טיפולי גוף אישיים",
-          description: "תמיכה בשחרור פיזי ורגשי לאורך השהייה.",
-        },
-      ],
-    },
-    {
-      number: "03",
-      badge: "ישראל · 6 חודשים",
-      title: "אינטגרציה וחזרה לחיים",
-      intro:
-        "העבודה ממשיכה בארץ, כדי לעבד את התובנות ולהטמיע אותן בחיי היום-יום.",
-      items: [
-        {
-          title: "אינטגרציה אישית",
-          description: "פגישות שבועיות אישיות לעיבוד וליווי תהליך האינטגרציה.",
-        },
-        {
-          title: "מעגלי אינטגרציה קבוצתיים",
-          description:
-            "6 מפגשי אינטגרציה קבוצתיים עם חברי השבט לאורך תקופת האינטגרציה.",
-        },
-        {
-          title: "מפגשי בוגרים קבוצתיים",
-          description:
-            "מפגשים עם בוגרי ריטריטים קודמים לשמירה על קשר, שיתוף וחיזוק הדדי לאורך זמן.",
-        },
-      ],
-    },
-  ];
-
-  const foundationCards = [
-    {
-      title: "מסגרת משפטית",
-      description:
-        "הפעילות מתקיימת בפרו ובהתאם למסגרת המשפטית המקומית. הנהלים, האחריות והכיסוי הביטוחי מוצגים למועמדים בתהליך המיון.",
-      icon: (
-        <svg
-          width="40"
-          height="40"
-          viewBox="0 0 40 40"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        >
-          <rect x="8" y="4" width="24" height="32" rx="3" />
-          <path d="M14 14h12M14 20h12M14 26h8" />
-          <path d="M24 2v5M16 2v5" />
-        </svg>
-      ),
-    },
-    {
-      title: "בטיחות רפואית",
-      description:
-        "ספר פרוטוקולים מקיף מנחה את הצוות בכל שלב, לצד פסיכולוגים ומנטורים שעברו תהליך ריפוי דומה ושירתו ביחידות קרביות.",
-      icon: (
-        <svg
-          width="40"
-          height="40"
-          viewBox="0 0 40 40"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        >
-          <path d="M20 4 L34 12 L34 22 C34 30, 20 36, 20 36 C20 36, 6 30, 6 22 L6 12 Z" />
-          <path d="M14 20 l4 4 l8 -8" />
-        </svg>
-      ),
-    },
-    {
-      title: "קוד אתיקה",
-      description:
-        "אנחנו פועלים לפי קוד התנהגות מקצועי שנועד לשמור על גבולות ברורים ולהגן על המשתתפים.",
-      icon: (
-        <svg
-          width="40"
-          height="40"
-          viewBox="0 0 40 40"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        >
-          <path d="M20 4 C12 10, 6 18, 10 26 C13 32, 17 34, 20 34 C23 34, 27 32, 30 26 C34 18, 28 10, 20 4Z" />
-          <circle cx="20" cy="20" r="5" />
-        </svg>
-      ),
-    },
-  ];
+  const supportedLocale: SupportedLocale = locale === "he" ? "he" : "en";
+  const content = homepageContent[supportedLocale];
 
   return (
     <div className="bg-[#f5f0e8] text-[#1e2518]">
@@ -539,7 +333,7 @@ export default async function HomePage({ params }: PageProps) {
         <div className="absolute inset-0">
           <Image
             src="/tribe-guardians/hero.jpg"
-            alt="שומרי השבט"
+            alt={content.hero.imageAlt}
             fill
             priority
             sizes="100vw"
@@ -550,37 +344,40 @@ export default async function HomePage({ params }: PageProps) {
 
         <div className="relative z-10 mx-auto flex min-h-[95vh] max-w-[820px] flex-col items-center justify-center px-4 py-24 md:px-6 lg:py-32">
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-white/65">
-            קליני · חדשני · קהילתי
+            {content.hero.eyebrow}
           </p>
           <h1 className="mt-5 font-primary text-[clamp(4rem,11vw,7rem)] font-black leading-none tracking-[-0.05em]">
-            שומרי השבט
+            {content.hero.title}
           </h1>
           <p className="mt-5 font-primary text-[clamp(1.5rem,3vw,2.25rem)] font-light leading-tight text-white/90">
-            ריפוי פוסט-טראומה לחיילים וחיילות
-            <br />
-            נפגעי הלחימה
+            {content.hero.subtitleLines.map((line, index) => (
+              <span key={line}>
+                {line}
+                {index < content.hero.subtitleLines.length - 1 ? <br /> : null}
+              </span>
+            ))}
           </p>
           <p className="mt-5 max-w-2xl text-sm leading-7 tracking-[0.04em] text-white/60 md:text-base">
-            חכמת האמזונס העתיקה · פסיכולוגיה קלינית מערבית · קהילה לכל החיים
+            {content.hero.tagline}
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-4">
             <Link
               href="#apply"
               className="rounded-full border-2 border-[#2d4a2d] bg-[#2d4a2d] px-8 py-3 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#3d6438]"
             >
-              להגשת מועמדות
+              {content.hero.applyCta}
             </Link>
             <Link
               href="#program"
               className="rounded-full border-2 border-white/40 px-8 py-3 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/10"
             >
-              למידע על התוכנית
+              {content.hero.programCta}
             </Link>
           </div>
         </div>
 
         <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 animate-bounce flex-col items-center gap-2 text-xs text-white/45">
-          <span>גלול למטה</span>
+          <span>{content.hero.scroll}</span>
           <svg
             width="16"
             height="24"
@@ -598,18 +395,18 @@ export default async function HomePage({ params }: PageProps) {
       <div className="border-y border-[#d8ceb8] bg-[#2d4a2d] px-4 py-4 text-white">
         <div className="mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-3">
           <span className="rounded-full bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em]">
-            מיונים פתוחים עכשיו
+            {content.announcement.badge}
           </span>
           <p className="text-sm leading-7 text-[#f4eedc]">
-            <strong>המסע הקרוב יוצא לפרו: 15 לנובמבר 2026</strong>
+            <strong>{content.announcement.departure}</strong>
             <span className="mx-2 opacity-60">·</span>
-            מספר המקומות מוגבל
+            {content.announcement.availability}
           </p>
           <Link
             href="#apply"
             className="rounded-full border border-white/40 bg-white/10 px-4 py-2 text-sm font-semibold text-[#f4eedc] transition-colors hover:bg-white/20"
           >
-            הגישו מועמדות
+            {content.announcement.cta}
           </Link>
         </div>
       </div>
@@ -618,16 +415,14 @@ export default async function HomePage({ params }: PageProps) {
         <div className="mx-auto w-full max-w-[1200px] px-4 md:px-6">
           <div className="mx-auto max-w-3xl">
             <SectionHeading
-              label="המשבר הלאומי"
-              title="לוחמינו נלחמים במלחמה בלתי נראית בבית"
-              intro={
-                'המלחמה שפרצה ב-7 באוקטובר 2023 חוללה בישראל "צונאמי של פצועי נפש" — כך מגדירים זאת המומחים הבכירים ביותר בתחום הטראומה בישראל.'
-              }
+              label={content.crisis.label}
+              title={content.crisis.title}
+              intro={content.crisis.intro}
             />
           </div>
 
           <div className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {stats.map((stat) => (
+            {content.crisis.stats.map((stat) => (
               <StatCard key={stat.value} stat={stat} />
             ))}
           </div>
@@ -635,31 +430,34 @@ export default async function HomePage({ params }: PageProps) {
           <div className="mx-auto mt-12 max-w-[1100px] overflow-hidden rounded-[1.6rem] shadow-[0_10px_40px_rgba(0,0,0,0.18)]">
             <Image
               src="/tribe-guardians/img_army.jpg"
-              alt="חיילי צה״ל בפעולה"
+              alt={content.crisis.imageAlt}
               width={1600}
               height={900}
               className="h-[320px] w-full object-cover object-center md:h-[440px]"
             />
           </div>
 
-          <blockquote className="mx-auto mt-12 max-w-[860px] rounded-[1.5rem] border-r-4 border-[#8b5e3c] bg-[#ede6d8] p-8 md:p-10">
+          <blockquote
+            className={[
+              "mx-auto mt-12 max-w-[860px] rounded-[1.5rem] border-[#8b5e3c] bg-[#ede6d8] p-8 md:p-10",
+              supportedLocale === "he" ? "border-r-4" : "border-l-4",
+            ].join(" ")}
+          >
             <p className="font-primary text-xl leading-8 text-[#1e2518] md:text-[1.6rem]">
-              &quot;המספרים לא משאירים צל של ספק. ישראל במשבר לאומי. הנזקים
-              שאנחנו רואים היום הם רק קצה הקרחון של מה שעוד יגיע.&quot;
+              &quot;{content.crisis.quote}&quot;
             </p>
             <cite className="mt-4 block text-sm not-italic leading-7 text-[#6b6450]">
-              — יו״ר המועצה הלאומית לפוסט-טראומה
+              {content.crisis.attribution}
               <br />
               <span className="text-[#8b5e3c] underline underline-offset-4">
-                מתוך כתבת הארץ, יוני 2026
+                {content.crisis.source}
               </span>
             </cite>
           </blockquote>
 
           <div className="mx-auto mt-12 max-w-[860px] rounded-[1.5rem] bg-[#2d4a2d] px-8 py-8 text-center shadow-[0_18px_40px_rgba(45,74,45,0.25)]">
             <p className="font-primary text-2xl font-bold leading-9 text-white md:text-[2rem]">
-              המשימה: להרחיב את אפשרויות התמיכה והריפוי עבור אחינו ואחיותינו
-              המתמודדים עם טראומה.
+              {content.crisis.mission}
             </p>
           </div>
         </div>
@@ -668,9 +466,9 @@ export default async function HomePage({ params }: PageProps) {
       <section className="bg-[#faf7f2] py-20 md:py-32">
         <div className="mx-auto w-full max-w-[860px] px-4 md:px-6">
           <SectionHeading
-            label="הפער"
-            title="לא כל טיפול מתאים לכל אדם"
-            intro="טיפולים מבוססי ראיות מסייעים לרבים המתמודדים עם פוסט-טראומה. לצד זאת, יש לוחמים הזקוקים למעטפת נוספת שמחברת בין טיפול קליני, גוף, קהילה והטמעה בחיי היום-יום."
+            label={content.gap.label}
+            title={content.gap.title}
+            intro={content.gap.intro}
           />
         </div>
       </section>
@@ -679,16 +477,16 @@ export default async function HomePage({ params }: PageProps) {
         <div className="mx-auto w-full max-w-[1200px] px-4 md:px-6">
           <div className="mx-auto max-w-3xl">
             <SectionHeading
-              label="הפתרון שלנו"
-              title="שילוב מסורת אמזונית עם ליווי קליני"
-              intro="החוויה בפרו היא חלק ממסגרת טיפולית רחבה יותר, הכוללת מיון, הכנה, ליווי מקצועי ותהליך אינטגרציה ממושך לאחר החזרה."
+              label={content.solution.label}
+              title={content.solution.title}
+              intro={content.solution.intro}
             />
           </div>
 
           <div className="mx-auto mt-12 max-w-[1100px] overflow-hidden rounded-[1.6rem] shadow-[0_10px_40px_rgba(0,0,0,0.18)]">
             <Image
               src="/tribe-guardians/img_steps.jpg"
-              alt="שביל המרכז ביער האמזונס"
+              alt={content.solution.imageAlt}
               width={1600}
               height={900}
               className="h-[300px] w-full object-cover object-center md:h-[420px]"
@@ -696,10 +494,10 @@ export default async function HomePage({ params }: PageProps) {
           </div>
 
           <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {pillars.map((pillar) => (
+            {content.solution.pillars.map((pillar) => (
               <PillarCard
                 key={pillar.title}
-                icon={pillar.icon}
+                icon={<ContentIcon name={pillar.icon} />}
                 title={pillar.title}
                 description={pillar.description}
               />
@@ -710,7 +508,7 @@ export default async function HomePage({ params }: PageProps) {
             <div className="overflow-hidden rounded-[1.25rem]">
               <Image
                 src="/tribe-guardians/img_peru.jpg"
-                alt="נוף בפרו"
+                alt={content.solution.peru.imageAlt}
                 width={1200}
                 height={900}
                 className="h-full min-h-[260px] w-full object-cover"
@@ -718,14 +516,13 @@ export default async function HomePage({ params }: PageProps) {
             </div>
             <div className="flex flex-col justify-center p-2 lg:p-4">
               <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-[#8b5e3c]">
-                מסע ללב האמזונס
+                {content.solution.peru.label}
               </p>
               <h3 className="font-primary text-3xl font-bold text-[#1e2518]">
-                פרו היא לא רק יעד. היא המרחב שמאפשר לעבודה להעמיק.
+                {content.solution.peru.title}
               </h3>
               <p className="mt-5 text-base leading-8 text-[#6b6450]">
-                הניתוק מהשגרה, מהעומס ומהרעש מאפשר למערכת העצבים להירגע, לגוף
-                להשתחרר, ולתהליך הקליני לקבל עומק שהיום-יום פשוט לא מאפשר.
+                {content.solution.peru.description}
               </p>
             </div>
           </div>
@@ -736,14 +533,14 @@ export default async function HomePage({ params }: PageProps) {
         <div className="mx-auto w-full max-w-[1200px] px-4 md:px-6">
           <div className="mx-auto max-w-3xl">
             <SectionHeading
-              label="התוכנית"
-              title="המסע הקליני: שלושה שלבים"
-              intro="המסע שלנו מתחיל כחודשיים לפני היציאה לפרו, ונמשך חצי שנה אחריו. זוהי התחייבות ארוכת-טווח לריפוי עמוק."
+              label={content.program.label}
+              title={content.program.title}
+              intro={content.program.intro}
             />
           </div>
 
           <div className="mt-12 space-y-8">
-            {phases.map((phase) => (
+            {content.program.phases.map((phase) => (
               <PhaseCard key={phase.title} phase={phase} />
             ))}
           </div>
@@ -754,34 +551,36 @@ export default async function HomePage({ params }: PageProps) {
         <div className="mx-auto grid w-full max-w-[1200px] gap-12 px-4 md:px-6 lg:grid-cols-[1fr_1fr] lg:items-center">
           <div>
             <SectionHeading
-              label="עלות ומה כלול"
-              title="מסגרת אחת, מחיר שקוף"
-              intro="תשלום אחד מרכז את כל שלבי המסע תחת מסגרת ברורה, מההכנה בישראל ועד האינטגרציה לאחר החזרה."
+              label={content.pricing.label}
+              title={content.pricing.title}
+              intro={content.pricing.intro}
               align="start"
             />
           </div>
 
           <div className="mx-auto w-full max-w-[340px] rounded-[1.25rem] border-2 border-[#2d4a2d] bg-[#faf7f2] p-8 text-center shadow-[0_12px_40px_rgba(30,37,24,0.12)]">
             <div className="font-primary text-[clamp(2.5rem,5vw,3.5rem)] font-black leading-none tracking-[-0.04em] text-[#2d4a2d]">
-              35,800 <span className="align-super text-[0.55em]">₪</span>
+              {content.pricing.amount}{" "}
+              <span className="align-super text-[0.55em]">
+                {content.pricing.currency}
+              </span>
             </div>
             <div className="mt-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#6b6450]">
-              לכל שלבי המסע
+              {content.pricing.amountLabel}
             </div>
             <ul className="mt-8 space-y-3 text-start text-sm text-[#1e2518]">
-              <li className="border-b border-[#d8ceb8] pb-3">
-                ✓ טיסות הלוך-חזור
-              </li>
-              <li className="border-b border-[#d8ceb8] pb-3">
-                ✓ כל פגישות ההכנה
-              </li>
-              <li className="border-b border-[#d8ceb8] pb-3">
-                ✓ ריטריט הכנה בישראל
-              </li>
-              <li className="border-b border-[#d8ceb8] pb-3">
-                ✓ 14 ימי ריטריט בפרו
-              </li>
-              <li>✓ 6 חודשי אינטגרציה</li>
+              {content.pricing.included.map((item, index) => (
+                <li
+                  key={item}
+                  className={
+                    index < content.pricing.included.length - 1
+                      ? "border-b border-[#d8ceb8] pb-3"
+                      : undefined
+                  }
+                >
+                  ✓ {item}
+                </li>
+              ))}
             </ul>
           </div>
         </div>
@@ -790,14 +589,18 @@ export default async function HomePage({ params }: PageProps) {
       <section id="foundation" className="bg-[#faf7f2] py-20 md:py-32">
         <div className="mx-auto w-full max-w-[1200px] px-4 md:px-6">
           <div className="mx-auto max-w-3xl">
-            <SectionHeading label="הבסיס שלנו" title="אפס פשרות" />
+            <SectionHeading
+              label={content.foundation.label}
+              title={content.foundation.title}
+              intro={content.foundation.intro}
+            />
           </div>
 
           <div className="mt-12 grid gap-6 lg:grid-cols-3">
-            {foundationCards.map((card) => (
+            {content.foundation.cards.map((card) => (
               <PillarCard
                 key={card.title}
-                icon={card.icon}
+                icon={<ContentIcon name={card.icon} size={40} />}
                 title={card.title}
                 description={card.description}
               />
@@ -807,27 +610,17 @@ export default async function HomePage({ params }: PageProps) {
           <div className="mx-auto mt-16 max-w-4xl overflow-hidden rounded-[1.75rem] border border-[#cec4a8] bg-[#f5f0e8] p-6 shadow-[0_10px_30px_rgba(30,37,24,0.08)] lg:p-8">
             <div>
               <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-[#8b5e3c]">
-                מחקר ולמידה
+                {content.foundation.research.label}
               </p>
               <h3 className="font-primary text-3xl font-bold text-[#1e2518]">
-                אנחנו לא רק מטפלים. אנחנו לומדים.
+                {content.foundation.research.title}
               </h3>
               <p className="mt-5 text-base leading-8 text-[#6b6450]">
-                אנחנו מבצעים מחקר פנימי, ובהמשך שואפים לשיתופי פעולה עם חוקרים
-                אקדמיים, כדי לבחון את המודל באופן שיטתי ולשפר אותו לאורך זמן.
+                {content.foundation.research.description}
               </p>
 
               <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                {[
-                  {
-                    title: "כלים",
-                    text: "עיצוב רב-מודאלי: פסיכולוגי, פיזי, ביולוגי וחברתי. כלים קליניים, חיישנים, סמנים ביולוגיים",
-                  },
-                  {
-                    title: "מטרה",
-                    text: "להעמיק את ההבנה של מה שעובד, ולאפשר לכמה שיותר מטופלים לקבל מענה שמשנה חיים",
-                  },
-                ].map((item) => (
+                {content.foundation.research.items.map((item) => (
                   <div
                     key={item.title}
                     className="rounded-2xl bg-[#faf7f2] p-5 shadow-sm"
@@ -853,7 +646,7 @@ export default async function HomePage({ params }: PageProps) {
         <div className="absolute inset-0">
           <Image
             src="/tribe-guardians/img_jungle_closing.jpg"
-            alt="יער האמזונס"
+            alt={content.apply.imageAlt}
             fill
             sizes="100vw"
             className="object-cover object-center"
@@ -864,58 +657,30 @@ export default async function HomePage({ params }: PageProps) {
         <div className="relative z-10 mx-auto w-full max-w-[1200px] px-4 md:px-6">
           <div className="mx-auto max-w-3xl text-center">
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-white/65">
-              הגשת מועמדות
+              {content.apply.label}
             </p>
             <h2 className="font-primary text-[clamp(2.5rem,5vw,4.5rem)] font-bold leading-[1.05] tracking-[-0.04em]">
-              מוכן לצעד הראשון?
+              {content.apply.title}
             </h2>
             <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-white/85">
-              בחרו את הטופס המתאים. המענה אישי וחסוי ואינו מחייב; לאחר השליחה
-              נחזור אליכם להמשך תהליך ההיכרות ובחינת ההתאמה.
+              {content.apply.description}
             </p>
           </div>
 
           <div className="mx-auto mt-12 grid max-w-5xl gap-4 lg:grid-cols-2">
             <ApplyCard
-              href="/he/register-patient"
+              href={`/${supportedLocale}/register-patient`}
               tone="primary"
-              title="שאלון למועמד"
-              description="לחיילים ולוחמים המעוניינים להשתתף בתוכנית"
-              icon={
-                <svg
-                  width="32"
-                  height="32"
-                  viewBox="0 0 32 32"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                >
-                  <circle cx="16" cy="10" r="5" />
-                  <path d="M6 28 C6 22, 10 18, 16 18 C22 18, 26 22, 26 28" />
-                </svg>
-              }
+              title={content.apply.applicant.title}
+              description={content.apply.applicant.description}
+              icon={<ContentIcon name={content.apply.applicant.icon} />}
             />
             <ApplyCard
-              href="/he/volunteer-healer"
+              href={`/${supportedLocale}/volunteer-healer`}
               tone="secondary"
-              title="שאלון למטפל"
-              description="לאנשי מקצוע בבריאות הנפש המעוניינים להצטרף לצוות"
-              icon={
-                <svg
-                  width="32"
-                  height="32"
-                  viewBox="0 0 32 32"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                >
-                  <circle cx="12" cy="10" r="4" />
-                  <path d="M4 26 C4 21, 7.5 18, 12 18" />
-                  <circle cx="22" cy="12" r="4" />
-                  <path d="M22 18 C26.5 18, 28 21, 28 26" />
-                  <path d="M14 22 L19 22 M16.5 19.5 L16.5 24.5" />
-                </svg>
-              }
+              title={content.apply.facilitator.title}
+              description={content.apply.facilitator.description}
+              icon={<ContentIcon name={content.apply.facilitator.icon} />}
             />
           </div>
         </div>
