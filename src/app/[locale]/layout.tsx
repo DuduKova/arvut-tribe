@@ -29,8 +29,8 @@ export async function generateMetadata({
     ? "שומרי השבט - מסע ריפוי משולב"
     : "Tribe Guardians - Integrated Healing Journey";
   const description = isHebrew
-    ? "דרך ריפוי קלינית ומשולבת לחיילים וללוחמים"
-    : "A clinically supported healing journey for fighters and veterans";
+    ? "דרך ריפוי אמזונית ומערבית קלינית לחיילים וחיילות"
+    : "An Amazonian and Western clinical healing path for soldiers and service members";
 
   // Use deployed project URL as default metadata base.
   const baseUrl =

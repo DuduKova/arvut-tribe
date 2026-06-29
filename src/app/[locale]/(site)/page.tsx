@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image, { getImageProps } from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import {
@@ -13,6 +13,42 @@ import {
 type PageProps = {
   params: Promise<{ locale: string }>;
 };
+
+const HERO_DESKTOP_IMAGE = "/tribe-guardians/hero-jungle-desktop.webp";
+const HERO_MOBILE_IMAGE = "/tribe-guardians/hero-jungle-mobile.webp";
+
+function HeroBackgroundImage({ alt }: { alt: string }) {
+  const commonImageProps = {
+    alt,
+    sizes: "100vw",
+    loading: "eager" as const,
+    fetchPriority: "high" as const,
+    className: "h-full w-full object-cover object-center",
+  };
+
+  const {
+    props: { srcSet: mobileSrcSet },
+  } = getImageProps({
+    ...commonImageProps,
+    src: HERO_MOBILE_IMAGE,
+    width: 1200,
+    height: 1500,
+  });
+
+  const { props: desktopProps } = getImageProps({
+    ...commonImageProps,
+    src: HERO_DESKTOP_IMAGE,
+    width: 2400,
+    height: 1340,
+  });
+
+  return (
+    <picture className="absolute inset-0 block h-full w-full">
+      <source media="(max-width: 767px)" sizes="100vw" srcSet={mobileSrcSet} />
+      <img {...desktopProps} alt={alt} />
+    </picture>
+  );
+}
 
 function SectionHeading({
   label,
@@ -71,7 +107,10 @@ function PillarCard({
 }) {
   return (
     <div className="rounded-3xl border border-[#cec4a8] bg-[#faf7f2] p-8 shadow-[0_1px_3px_rgba(30,37,24,0.08)] transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(30,37,24,0.14)]">
-      <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#ede6d8] text-[#2d4a2d]">
+      <div
+        dir="ltr"
+        className="mb-5 flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[#ede6d8] text-[#2d4a2d]"
+      >
         {icon}
       </div>
       <h3 className="font-primary text-xl font-bold text-[#1e2518]">{title}</h3>
@@ -182,6 +221,29 @@ function ContentIcon({
   name: HomepageIcon;
   size?: 32 | 40;
 }) {
+  const solutionIconImages: Partial<Record<HomepageIcon, string>> = {
+    safe: "/tribe-guardians/icons/safe-container.webp",
+    longTerm: "/tribe-guardians/icons/long-term-focus.webp",
+    community: "/tribe-guardians/icons/community-tribe.webp",
+  };
+  const solutionIconImage = solutionIconImages[name];
+
+  if (solutionIconImage) {
+    return (
+      <Image
+        src={solutionIconImage}
+        alt=""
+        aria-hidden="true"
+        width={96}
+        height={96}
+        className={[
+          "object-contain mix-blend-multiply contrast-125",
+          size === 40 ? "h-[3.75rem] w-[3.75rem]" : "h-14 w-14",
+        ].join(" ")}
+      />
+    );
+  }
+
   const commonProps = {
     width: size,
     height: size,
@@ -331,15 +393,8 @@ export default async function HomePage({ params }: PageProps) {
     <div className="bg-[#f5f0e8] text-[#1e2518]">
       <section className="relative isolate min-h-[95vh] overflow-hidden text-center text-white">
         <div className="absolute inset-0">
-          <Image
-            src="/tribe-guardians/hero.jpg"
-            alt={content.hero.imageAlt}
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,10,4,0.6)_0%,rgba(6,10,4,0.72)_55%,rgba(4,8,2,0.88)_100%)]" />
+          <HeroBackgroundImage alt={content.hero.imageAlt} />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,10,4,0.64)_0%,rgba(6,10,4,0.76)_55%,rgba(4,8,2,0.9)_100%)]" />
         </div>
 
         <div className="relative z-10 mx-auto flex min-h-[95vh] max-w-[820px] flex-col items-center justify-center px-4 py-24 md:px-6 lg:py-32">
@@ -428,13 +483,34 @@ export default async function HomePage({ params }: PageProps) {
           </div>
 
           <div className="mx-auto mt-12 max-w-[1100px] overflow-hidden rounded-[1.6rem] shadow-[0_10px_40px_rgba(0,0,0,0.18)]">
-            <Image
-              src="/tribe-guardians/img_army.jpg"
-              alt={content.crisis.imageAlt}
-              width={1600}
-              height={900}
-              className="h-[320px] w-full object-cover object-center md:h-[440px]"
-            />
+            {content.crisis.imageMobile ? (
+              <>
+                <Image
+                  src={content.crisis.imageMobile}
+                  alt={
+                    content.crisis.imageMobileAlt ?? content.crisis.imageAlt
+                  }
+                  width={1600}
+                  height={900}
+                  className="h-[320px] w-full object-cover object-center md:hidden"
+                />
+                <Image
+                  src="/tribe-guardians/img_army.jpg"
+                  alt={content.crisis.imageAlt}
+                  width={1600}
+                  height={900}
+                  className="hidden h-[440px] w-full object-cover object-center md:block"
+                />
+              </>
+            ) : (
+              <Image
+                src="/tribe-guardians/img_army.jpg"
+                alt={content.crisis.imageAlt}
+                width={1600}
+                height={900}
+                className="h-[320px] w-full object-cover object-[15%_center] md:h-[440px] md:object-center"
+              />
+            )}
           </div>
 
           <blockquote

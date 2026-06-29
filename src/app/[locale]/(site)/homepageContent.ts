@@ -65,6 +65,8 @@ type HomepageContent = {
   crisis: SectionHeadingContent & {
     stats: Stat[];
     imageAlt: string;
+    imageMobile?: string;
+    imageMobileAlt?: string;
     quote: string;
     attribution: string;
     source: string;
@@ -115,7 +117,7 @@ type HomepageContent = {
 export const homepageContent: Record<SupportedLocale, HomepageContent> = {
   he: {
     hero: {
-      imageAlt: "שומרי השבט",
+      imageAlt: "לוחם עומד ביער האמזונס",
       eyebrow: "קליני · חדשני · קהילתי",
       title: "שומרי השבט",
       subtitleLines: ["ריפוי פוסט-טראומה לחיילים וחיילות", "נפגעי הלחימה"],
@@ -170,13 +172,13 @@ export const homepageContent: Record<SupportedLocale, HomepageContent> = {
       label: "הפער",
       title: "לא כל טיפול מתאים לכל אדם",
       intro:
-        "טיפולים מבוססי ראיות מסייעים לרבים המתמודדים עם פוסט-טראומה. לצד זאת, יש לוחמים הזקוקים למעטפת נוספת שמחברת בין טיפול קליני, גוף, קהילה והטמעה בחיי היום-יום.",
+        "הטיפולים הקיימים עוזרים באספקטים מסויימים אבל לעתים אינם מקיפים ולא מרפאים מהשורש. אנו מציעים מעטפת נוספת המחברת בין רפואה עתיקה, טיפול קליני, גוף קהילה והטמעה בחיי היום יום.",
     },
     solution: {
       label: "הפתרון שלנו",
       title: "שילוב מסורת אמזונית עם ליווי קליני",
       intro:
-        "החוויה בפרו היא חלק ממסגרת טיפולית רחבה יותר, הכוללת מיון, הכנה, ליווי מקצועי ותהליך אינטגרציה ממושך לאחר החזרה.",
+        "הריטריט בפרו הוא חלק ממסגרת טיפולית רחבה יותר, הכוללת מיון, הכנה, ליווי מקצועי ותהליך אינטגרציה ממושך לאחר החזרה.",
       imageAlt: "שביל המרכז ביער האמזונס",
       pillars: [
         {
@@ -253,9 +255,9 @@ export const homepageContent: Record<SupportedLocale, HomepageContent> = {
           highlight: true,
           items: [
             {
-              title: "איוואסקה וצמחי רפואה אמזוניים",
+              title: "אייווסקה וצמחי רפואה אמזוניים",
               description:
-                "המפגש עם איוואסקה וצמחים אמזוניים נוספים מתקיים כחלק מהמסגרת המסורתית של הריטריט, לאחר מיון והכנה ובליווי הצוות.",
+                "בהנחיית אשת רפואה פרואנית מנוסה, ובתמיכה של צוות מנטורים המורכב מחיילים לשבר שעברו בעצמם דרך ריפוי דומה, ואנשי טיפול קליניים.",
               plant: true,
             },
             {
@@ -346,7 +348,7 @@ export const homepageContent: Record<SupportedLocale, HomepageContent> = {
         items: [
           {
             title: "כלים",
-            text: "עיצוב רב-מודאלי: פסיכולוגי, פיזי, ביולוגי וחברתי. כלים קליניים, חיישנים, סמנים ביולוגיים",
+            text: "עיצוב רב-מודאלי: פסיכולוגי וחברתי. כלים קליניים",
           },
           {
             title: "מטרה",
@@ -375,7 +377,7 @@ export const homepageContent: Record<SupportedLocale, HomepageContent> = {
   },
   en: {
     hero: {
-      imageAlt: "Tribe Guardians",
+      imageAlt: "Soldier standing in the Amazon rainforest",
       eyebrow: "Clinical · Innovative · Community-Based",
       title: "Tribe Guardians",
       subtitleLines: [
@@ -435,13 +437,13 @@ export const homepageContent: Record<SupportedLocale, HomepageContent> = {
       label: "The Gap",
       title: "No Single Treatment Is Right for Everyone",
       intro:
-        "Evidence-based treatments help many people living with post-trauma. At the same time, some fighters need an additional framework that connects clinical care, the body, community, and integration into daily life.",
+        "Existing treatments help with certain aspects, but they are sometimes not comprehensive and do not heal at the root. We offer an additional framework that connects ancient medicine, clinical care, the body, community, and integration into everyday life.",
     },
     solution: {
       label: "Our Solution",
       title: "Amazonian Tradition with Clinical Support",
       intro:
-        "The experience in Peru is one part of a broader therapeutic framework that includes screening, preparation, professional support, and an extended integration process after returning home.",
+        "The retreat in Peru is one part of a broader therapeutic framework that includes screening, preparation, professional support, and an extended integration process after returning home.",
       imageAlt: "Path through the Amazon rainforest retreat center",
       pillars: [
         {
@@ -524,7 +526,7 @@ export const homepageContent: Record<SupportedLocale, HomepageContent> = {
             {
               title: "Ayahuasca and Amazonian Plant Medicines",
               description:
-                "Encounters with ayahuasca and other Amazonian plants take place within the retreat’s traditional framework, following screening and preparation and with support from the team.",
+                "Guided by an experienced Peruvian medicine woman, and supported by a mentor team of combat veterans who have themselves been through a similar healing journey, alongside clinical therapists.",
               plant: true,
             },
             {
@@ -616,7 +618,7 @@ export const homepageContent: Record<SupportedLocale, HomepageContent> = {
         items: [
           {
             title: "Tools",
-            text: "A multimodal design spanning psychological, physical, biological, and social dimensions, using clinical tools, sensors, and biomarkers",
+            text: "A multimodal design spanning psychological and social dimensions, using clinical tools",
           },
           {
             title: "Goal",
