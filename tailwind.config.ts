@@ -9,8 +9,10 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        primary: ["var(--font-primary)", "Georgia", "serif"],
-        secondary: ["var(--font-secondary)", "-apple-system", "BlinkMacSystemFont", '"Segoe UI"', "sans-serif"],
+        sans: ["var(--font-site)"],
+        primary: ["var(--font-site)"],
+        secondary: ["var(--font-site)"],
+        mono: ["var(--font-site)"],
       },
       lineHeight: {
         "relaxed": "1.75",
@@ -27,7 +29,7 @@ const config: Config = {
         "indigo-violet": "hsl(var(--indigo-violet))",
         "bordeaux-rose": "hsl(var(--bordeaux-rose))",
         "warm-cream": "hsl(var(--warm-cream))",
-        
+
         // Semantic colors (shadcn/ui compatible)
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -69,10 +71,14 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)",
       },
       backgroundImage: {
-        "organic-texture": "url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iYSIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIj48cGF0aCBkPSJNMzAgMzBoMzB2MzBIMzB6IiBmaWxsPSJub25lIiBzdHJva2U9ImhzbCgzNSAyNSUgNzAlKSIgc3Ryb2tlLXdpZHRoPSIwLjUiIG9wYWNpdHk9IjAuMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSJ1cmwoI2EpIi8+PC9zdmc+')",
-        "sacred-circle": "url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIyMCIgY3k9IjIwIiByPSIxOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJoc2woMzUgMjUlIDcwJSkiIHN0cm9rZS13aWR0aD0iMC41IiBvcGFjaXR5PSIwLjA1Ii8+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMTIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iaHNsKDM1IDI1JSA3MCUpIiBzdHJva2Utd2lkdGg9IjAuNSIgb3BhY2l0eT0iMC4wNSIvPjxjaXJjbGUgY3g9IjIwIiBjeT0iMjAiIHI9IjYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iaHNsKDM1IDI1JSA3MCUpIiBzdHJva2Utd2lkdGg9IjAuNSIgb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')",
-        "tribal-pattern": "url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMCA0MEw0MCAwTDgwIDQwTDQwIDgwWiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJoc2woNDIgNDQlIDU2JSkiIHN0cm9rZS13aWR0aD0iMC41IiBvcGFjaXR5PSIwLjA4Ii8+PHBhdGggZD0iTTIwIDQwTDMwIDIwTDMwIDYwWiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJoc2woNDIgNDQlIDU2JSkiIHN0cm9rZS13aWR0aD0iMC41IiBvcGFjaXR5PSIwLjA4Ii8+PHBhdGggZD0iTTUwIDQwTDMwIDIwTDMwIDYwWiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJoc2woNDIgNDQlIDU2JSkiIHN0cm9rZS13aWR0aD0iMC41IiBvcGFjaXR5PSIwLjA4Ii8+PC9zdmc+')",
-        "geometric-divider": "url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjQiIHZpZXdCb3g9IjAgMCAxMDAgNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMCAyTDUwIDJMMTAwIDIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iaHNsKDM1IDI1JSA3MCUpIiBzdHJva2Utd2lkdGg9IjEiIG9wYWNpdHk9IjAuMiIvPjxjaXJjbGUgY3g9IjUwIiBjeT0iMiIgcj0iMiIgZmlsbD0iaHNsKDQyIDQ0JSA1NiUpIiBvcGFjaXR5PSIwLjMiLz48L3N2Zz4=')",
+        "organic-texture":
+          "url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iYSIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIj48cGF0aCBkPSJNMzAgMzBoMzB2MzBIMzB6IiBmaWxsPSJub25lIiBzdHJva2U9ImhzbCgzNSAyNSUgNzAlKSIgc3Ryb2tlLXdpZHRoPSIwLjUiIG9wYWNpdHk9IjAuMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSJ1cmwoI2EpIi8+PC9zdmc+')",
+        "sacred-circle":
+          "url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIyMCIgY3k9IjIwIiByPSIxOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJoc2woMzUgMjUlIDcwJSkiIHN0cm9rZS13aWR0aD0iMC41IiBvcGFjaXR5PSIwLjA1Ii8+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMTIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iaHNsKDM1IDI1JSA3MCUpIiBzdHJva2Utd2lkdGg9IjAuNSIgb3BhY2l0eT0iMC4wNSIvPjxjaXJjbGUgY3g9IjIwIiBjeT0iMjAiIHI9IjYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iaHNsKDM1IDI1JSA3MCUpIiBzdHJva2Utd2lkdGg9IjAuNSIgb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')",
+        "tribal-pattern":
+          "url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMCA0MEw0MCAwTDgwIDQwTDQwIDgwWiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJoc2woNDIgNDQlIDU2JSkiIHN0cm9rZS13aWR0aD0iMC41IiBvcGFjaXR5PSIwLjA4Ii8+PHBhdGggZD0iTTIwIDQwTDMwIDIwTDMwIDYwWiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJoc2woNDIgNDQlIDU2JSkiIHN0cm9rZS13aWR0aD0iMC41IiBvcGFjaXR5PSIwLjA4Ii8+PHBhdGggZD0iTTUwIDQwTDMwIDIwTDMwIDYwWiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJoc2woNDIgNDQlIDU2JSkiIHN0cm9rZS13aWR0aD0iMC41IiBvcGFjaXR5PSIwLjA4Ii8+PC9zdmc+')",
+        "geometric-divider":
+          "url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjQiIHZpZXdCb3g9IjAgMCAxMDAgNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMCAyTDUwIDJMMTAwIDIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iaHNsKDM1IDI1JSA3MCUpIiBzdHJva2Utd2lkdGg9IjEiIG9wYWNpdHk9IjAuMiIvPjxjaXJjbGUgY3g9IjUwIiBjeT0iMiIgcj0iMiIgZmlsbD0iaHNsKDQyIDQ0JSA1NiUpIiBvcGFjaXR5PSIwLjMiLz48L3N2Zz4=')",
       },
     },
   },
