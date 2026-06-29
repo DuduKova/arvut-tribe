@@ -8,7 +8,8 @@ export type HomepageIcon =
   | "medical"
   | "ethics"
   | "applicant"
-  | "facilitator";
+  | "facilitator"
+  | "donor";
 
 export type Stat = {
   value: string;
@@ -54,6 +55,7 @@ type HomepageContent = {
     tagline: string;
     applyCta: string;
     programCta: string;
+    donateCta: string;
     scroll: string;
   };
   announcement: {
@@ -61,6 +63,7 @@ type HomepageContent = {
     departure: string;
     availability: string;
     cta: string;
+    donateCta: string;
   };
   crisis: SectionHeadingContent & {
     stats: Stat[];
@@ -90,6 +93,7 @@ type HomepageContent = {
     amount: string;
     currency: string;
     amountLabel: string;
+    donateCta: string;
     included: string[];
   };
   foundation: SectionHeadingContent & {
@@ -111,6 +115,7 @@ type HomepageContent = {
     description: string;
     applicant: ContentCard;
     facilitator: ContentCard;
+    donor: ContentCard;
   };
 };
 
@@ -125,6 +130,7 @@ export const homepageContent: Record<SupportedLocale, HomepageContent> = {
         "חכמת האמזונס העתיקה · פסיכולוגיה קלינית מערבית · קהילה לכל החיים",
       applyCta: "להגשת מועמדות",
       programCta: "למידע על התוכנית",
+      donateCta: "לתרומה",
       scroll: "גלול למטה",
     },
     announcement: {
@@ -132,6 +138,7 @@ export const homepageContent: Record<SupportedLocale, HomepageContent> = {
       departure: "המסע הקרוב יוצא לפרו: 15 לנובמבר 2026",
       availability: "מספר המקומות מוגבל",
       cta: "הגישו מועמדות",
+      donateCta: "תמכו במסע",
     },
     crisis: {
       label: "המשבר הלאומי",
@@ -309,6 +316,7 @@ export const homepageContent: Record<SupportedLocale, HomepageContent> = {
       amount: "35,800",
       currency: "₪",
       amountLabel: "לכל שלבי המסע",
+      donateCta: "עזרו לממן משתתף",
       included: [
         "טיסות הלוך-חזור",
         "כל פגישות ההכנה",
@@ -373,6 +381,11 @@ export const homepageContent: Record<SupportedLocale, HomepageContent> = {
         description: "לאנשי מקצוע בבריאות הנפש המעוניינים להצטרף לצוות",
         icon: "facilitator",
       },
+      donor: {
+        title: "תמיכה בתוכנית",
+        description: "למי שרוצה לעזור לפתוח את הדרך לעוד לוחמים ולוחמות",
+        icon: "donor",
+      },
     },
   },
   en: {
@@ -388,6 +401,7 @@ export const homepageContent: Record<SupportedLocale, HomepageContent> = {
         "Ancient Amazonian wisdom · Western clinical psychology · A community for life",
       applyCta: "Apply",
       programCta: "Learn About the Program",
+      donateCta: "Donate",
       scroll: "Scroll down",
     },
     announcement: {
@@ -395,6 +409,7 @@ export const homepageContent: Record<SupportedLocale, HomepageContent> = {
       departure: "The next journey departs for Peru: November 15, 2026",
       availability: "Space is limited",
       cta: "Apply Now",
+      donateCta: "Support the Journey",
     },
     crisis: {
       label: "The National Crisis",
@@ -579,6 +594,7 @@ export const homepageContent: Record<SupportedLocale, HomepageContent> = {
       amount: "35,800",
       currency: "₪",
       amountLabel: "For every stage of the journey",
+      donateCta: "Help Fund a Participant",
       included: [
         "Round-trip flights",
         "All preparation meetings",
@@ -644,6 +660,12 @@ export const homepageContent: Record<SupportedLocale, HomepageContent> = {
         description:
           "For mental-health professionals interested in joining the team",
         icon: "facilitator",
+      },
+      donor: {
+        title: "Support the Program",
+        description:
+          "For donors who want to help open the path for more service members",
+        icon: "donor",
       },
     },
   },

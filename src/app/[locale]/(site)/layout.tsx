@@ -25,6 +25,7 @@ export default async function SiteLayout({
       links={{
         primary: [
           { label: t("home"), href: `/${locale}` },
+          { label: t("donate"), href: `/${locale}/donate` },
           { label: t("register"), href: `/${locale}/register-patient` },
           { label: t("volunteer"), href: `/${locale}/volunteer-healer` },
         ],
@@ -33,6 +34,7 @@ export default async function SiteLayout({
             heading: tFooter("quickLinks"),
             links: [
               { label: t("home"), href: `/${locale}` },
+              { label: t("donate"), href: `/${locale}/donate` },
               { label: t("register"), href: `/${locale}/register-patient` },
               { label: t("volunteer"), href: `/${locale}/volunteer-healer` },
             ],

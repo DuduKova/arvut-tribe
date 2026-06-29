@@ -320,6 +320,13 @@ function ContentIcon({
           <path d="M14 22 L19 22 M16.5 19.5 L16.5 24.5" />
         </svg>
       );
+    case "donor":
+      return (
+        <svg {...commonProps}>
+          <path d="M16 27 C9 22, 5 18, 5 13 C5 9.5, 7.5 7, 10.8 7 C13 7, 14.8 8.3, 16 10 C17.2 8.3, 19 7, 21.2 7 C24.5 7, 27 9.5, 27 13 C27 18, 23 22, 16 27Z" />
+          <path d="M16 14 V21 M12.5 17.5 H19.5" />
+        </svg>
+      );
   }
 }
 
@@ -388,6 +395,7 @@ export default async function HomePage({ params }: PageProps) {
   const { locale } = await params;
   const supportedLocale: SupportedLocale = locale === "he" ? "he" : "en";
   const content = homepageContent[supportedLocale];
+  const donateHref = `/${supportedLocale}/donate`;
 
   return (
     <div className="bg-[#f5f0e8] text-[#1e2518]">
@@ -428,6 +436,12 @@ export default async function HomePage({ params }: PageProps) {
             >
               {content.hero.programCta}
             </Link>
+            <Link
+              href={donateHref}
+              className="rounded-full border-2 border-[#8b5e3c] bg-[#8b5e3c] px-8 py-3 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#a87248]"
+            >
+              {content.hero.donateCta}
+            </Link>
           </div>
         </div>
 
@@ -457,12 +471,20 @@ export default async function HomePage({ params }: PageProps) {
             <span className="mx-2 opacity-60">·</span>
             {content.announcement.availability}
           </p>
-          <Link
-            href="#apply"
-            className="rounded-full border border-white/40 bg-white/10 px-4 py-2 text-sm font-semibold text-[#f4eedc] transition-colors hover:bg-white/20"
-          >
-            {content.announcement.cta}
-          </Link>
+          <div className="flex flex-wrap gap-2">
+            <Link
+              href="#apply"
+              className="rounded-full border border-white/40 bg-white/10 px-4 py-2 text-sm font-semibold text-[#f4eedc] transition-colors hover:bg-white/20"
+            >
+              {content.announcement.cta}
+            </Link>
+            <Link
+              href={donateHref}
+              className="rounded-full border border-[#f4eedc]/70 bg-[#f4eedc] px-4 py-2 text-sm font-semibold text-[#2d4a2d] transition-colors hover:bg-white"
+            >
+              {content.announcement.donateCta}
+            </Link>
+          </div>
         </div>
       </div>
 
@@ -658,6 +680,12 @@ export default async function HomePage({ params }: PageProps) {
                 </li>
               ))}
             </ul>
+            <Link
+              href={donateHref}
+              className="mt-8 inline-flex rounded-full border border-[#2d4a2d] bg-[#2d4a2d] px-6 py-3 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#3d6438]"
+            >
+              {content.pricing.donateCta}
+            </Link>
           </div>
         </div>
       </section>
@@ -743,7 +771,7 @@ export default async function HomePage({ params }: PageProps) {
             </p>
           </div>
 
-          <div className="mx-auto mt-12 grid max-w-5xl gap-4 lg:grid-cols-2">
+          <div className="mx-auto mt-12 grid max-w-6xl gap-4 lg:grid-cols-3">
             <ApplyCard
               href={`/${supportedLocale}/register-patient`}
               tone="primary"
@@ -757,6 +785,13 @@ export default async function HomePage({ params }: PageProps) {
               title={content.apply.facilitator.title}
               description={content.apply.facilitator.description}
               icon={<ContentIcon name={content.apply.facilitator.icon} />}
+            />
+            <ApplyCard
+              href={donateHref}
+              tone="secondary"
+              title={content.apply.donor.title}
+              description={content.apply.donor.description}
+              icon={<ContentIcon name={content.apply.donor.icon} />}
             />
           </div>
         </div>
