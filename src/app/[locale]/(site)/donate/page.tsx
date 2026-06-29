@@ -8,8 +8,10 @@ type PageProps = {
   params: Promise<{ locale: string }>;
 };
 
-const DONATION_FORM_URL =
-  "https://secured.israelgives.org/he/give/tribeguardians";
+const DONATION_FORM_URLS: Record<SupportedLocale, string> = {
+  he: "https://secured.israelgives.org/he/give/tribeguardians",
+  en: "https://secured.israelgives.org/en/give/tribeguardians",
+};
 
 const donateContent: Record<
   SupportedLocale,
@@ -101,6 +103,7 @@ export default async function DonatePage({ params }: PageProps) {
   const { locale } = await params;
   const supportedLocale: SupportedLocale = locale === "he" ? "he" : "en";
   const content = donateContent[supportedLocale];
+  const donationFormUrl = DONATION_FORM_URLS[supportedLocale];
 
   return (
     <div className="bg-[#f5f0e8] text-[#1e2518]">
@@ -158,7 +161,7 @@ export default async function DonatePage({ params }: PageProps) {
                   {content.embedTitle}
                 </p>
                 <Link
-                  href={DONATION_FORM_URL}
+                  href={donationFormUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm font-semibold text-[#2d4a2d] underline decoration-[#7ab87a]/50 underline-offset-4 transition-colors hover:text-[#1e2518]"
@@ -170,7 +173,7 @@ export default async function DonatePage({ params }: PageProps) {
 
             <div className="p-3 md:p-6">
               <DonationEmbed
-                formUrl={DONATION_FORM_URL}
+                formUrl={donationFormUrl}
                 title={content.embedTitle}
               />
             </div>
@@ -182,7 +185,7 @@ export default async function DonatePage({ params }: PageProps) {
             </p>
             <div className="flex flex-wrap gap-3">
               <Link
-                href={DONATION_FORM_URL}
+                href={donationFormUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-full border border-[#2d4a2d] bg-[#2d4a2d] px-5 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#3d6438]"
