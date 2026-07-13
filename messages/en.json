@@ -7,6 +7,13 @@
     "language": "Language",
     "organizationName": "The Tribe Guardians"
   },
+  "analyticsConsent": {
+    "ariaLabel": "Analytics preferences",
+    "title": "Allow analytics cookies?",
+    "description": "We use Google Analytics to understand general site usage and improve the site. Personal registration form details are not sent.",
+    "accept": "Allow",
+    "decline": "Not now"
+  },
   "homepage": {
     "hero": {
       "title": "Welcome to The Tribe Guardians",

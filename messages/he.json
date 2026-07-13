@@ -7,6 +7,13 @@
     "language": "שפה",
     "organizationName": "שומרי השבט"
   },
+  "analyticsConsent": {
+    "ariaLabel": "העדפות אנליטיקה",
+    "title": "אפשר להשתמש בעוגיות אנליטיקה?",
+    "description": "אנחנו משתמשים ב-Google Analytics כדי להבין שימוש כללי באתר ולשפר אותו. לא נשלחים פרטים אישיים מטפסי ההרשמה.",
+    "accept": "אישור",
+    "decline": "לא עכשיו"
+  },
   "homepage": {
     "hero": {
       "title": "ברוכים הבאים לשומרי השבט",
