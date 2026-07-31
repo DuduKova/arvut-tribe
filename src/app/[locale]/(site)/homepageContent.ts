@@ -49,6 +49,8 @@ type ContentCard = {
 type HomepageContent = {
   hero: {
     imageAlt: string;
+    videoEmbedId: string;
+    videoTitle: string;
     eyebrow: string;
     title: string;
     subtitleLines: string[];
@@ -123,6 +125,8 @@ export const homepageContent: Record<SupportedLocale, HomepageContent> = {
   he: {
     hero: {
       imageAlt: "לוחם עומד ביער האמזונס",
+      videoEmbedId: "1wYPhX2GD4W9ZbjYyVkraf4VAZJQv9rMg",
+      videoTitle: "סרטון שומרי השבט",
       eyebrow: "קליני · חדשני · קהילתי",
       title: "שומרי השבט",
       subtitleLines: ["ריפוי פוסט-טראומה לחיילים וחיילות", "נפגעי הלחימה"],
@@ -179,7 +183,7 @@ export const homepageContent: Record<SupportedLocale, HomepageContent> = {
       label: "הפער",
       title: "לא כל טיפול מתאים לכל אדם",
       intro:
-        "הטיפולים הקיימים עוזרים באספקטים מסויימים אבל לעתים אינם מקיפים ולא מרפאים מהשורש. אנו מציעים מעטפת נוספת המחברת בין רפואה עתיקה, טיפול קליני, גוף קהילה והטמעה בחיי היום יום.",
+        "פוסט-טראומה היא פצע שחי בגוף, לא רק בזיכרון. שיחות טיפוליות יכולות לתת מסגרת ומילים, אבל לא תמיד מגיעות לשורש. תרופות יכולות להקהות את העוצמה אבל לא לרפא. לוחמים רבים מוצאים את עצמם מנהלים סימפטומים לאורך שנים, מבלי שמשהו באמת משתנה בפנים. לא בגלל שהם לא ניסו, אלא כי הכלים הקיימים לא תמיד מספיקים לבדם.",
     },
     solution: {
       label: "הפתרון שלנו",
@@ -262,9 +266,9 @@ export const homepageContent: Record<SupportedLocale, HomepageContent> = {
           highlight: true,
           items: [
             {
-              title: "אייווסקה וצמחי רפואה אמזוניים",
+              title: "אייווסקה וצמחי רפואה אמזונים",
               description:
-                "בהנחיית אשת רפואה פרואנית מנוסה, ובתמיכה של צוות מנטורים המורכב מחיילים לשבר שעברו בעצמם דרך ריפוי דומה, ואנשי טיפול קליניים.",
+                "בהנחיית אשת רפואה פרואנית מנוסה, ובתמיכה של צוות מנטורים המורכב מחיילים לשעבר שעברו בעצמם דרך ריפוי דומה, ואנשי טיפול קליניים.",
               plant: true,
             },
             {
@@ -391,6 +395,8 @@ export const homepageContent: Record<SupportedLocale, HomepageContent> = {
   en: {
     hero: {
       imageAlt: "Soldier standing in the Amazon rainforest",
+      videoEmbedId: "1xy3f9Rcni0O-4cwVK6jHF4y8CRnTUITJ",
+      videoTitle: "Tribe Guardians video",
       eyebrow: "Clinical · Innovative · Community-Based",
       title: "Tribe Guardians",
       subtitleLines: [
@@ -452,7 +458,7 @@ export const homepageContent: Record<SupportedLocale, HomepageContent> = {
       label: "The Gap",
       title: "No Single Treatment Is Right for Everyone",
       intro:
-        "Existing treatments help with certain aspects, but they are sometimes not comprehensive and do not heal at the root. We offer an additional framework that connects ancient medicine, clinical care, the body, community, and integration into everyday life.",
+        "Post-trauma is a wound that lives in the body, not only in memory. Therapeutic conversations can provide a framework and words, but they do not always reach the root. Medications can dull the intensity but do not heal. Many fighters find themselves managing symptoms for years, without anything truly changing inside. Not because they did not try, but because the existing tools are not always enough on their own.",
     },
     solution: {
       label: "Our Solution",

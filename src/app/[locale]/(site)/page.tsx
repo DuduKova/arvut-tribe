@@ -1,4 +1,4 @@
-import Image, { getImageProps } from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import {
@@ -17,36 +17,42 @@ type PageProps = {
 const HERO_DESKTOP_IMAGE = "/tribe-guardians/hero-jungle-desktop.webp";
 const HERO_MOBILE_IMAGE = "/tribe-guardians/hero-jungle-mobile.webp";
 
-function HeroBackgroundImage({ alt }: { alt: string }) {
-  const commonImageProps = {
-    alt,
-    sizes: "100vw",
-    loading: "eager" as const,
-    fetchPriority: "high" as const,
-    className: "h-full w-full object-cover object-center",
-  };
-
-  const {
-    props: { srcSet: mobileSrcSet },
-  } = getImageProps({
-    ...commonImageProps,
-    src: HERO_MOBILE_IMAGE,
-    width: 1200,
-    height: 1500,
-  });
-
-  const { props: desktopProps } = getImageProps({
-    ...commonImageProps,
-    src: HERO_DESKTOP_IMAGE,
-    width: 2400,
-    height: 1340,
-  });
-
+function HeroVideo({ embedId, title }: { embedId: string; title: string }) {
   return (
-    <picture className="absolute inset-0 block h-full w-full">
-      <source media="(max-width: 767px)" sizes="100vw" srcSet={mobileSrcSet} />
-      <img {...desktopProps} alt={alt} />
-    </picture>
+    <div className="mt-8 w-full max-w-3xl overflow-hidden rounded-2xl border border-white/20 shadow-[0_20px_60px_rgba(0,0,0,0.45)]">
+      <div className="relative aspect-video w-full bg-black/40">
+        <iframe
+          src={`https://drive.google.com/file/d/${embedId}/preview`}
+          title={title}
+          className="absolute inset-0 h-full w-full border-0"
+          allow="autoplay; encrypted-media; fullscreen"
+          allowFullScreen
+        />
+      </div>
+    </div>
+  );
+}
+
+function HeroBackgroundImage({ alt }: { alt: string }) {
+  return (
+    <>
+      <Image
+        src={HERO_MOBILE_IMAGE}
+        alt={alt}
+        fill
+        sizes="100vw"
+        priority
+        className="object-cover object-[center_28%] md:hidden"
+      />
+      <Image
+        src={HERO_DESKTOP_IMAGE}
+        alt={alt}
+        fill
+        sizes="100vw"
+        priority
+        className="hidden object-cover object-[22%_center] md:block md:object-center"
+      />
+    </>
   );
 }
 
@@ -423,6 +429,10 @@ export default async function HomePage({ params }: PageProps) {
           <p className="mt-5 max-w-2xl text-sm leading-7 tracking-[0.04em] text-white/60 md:text-base">
             {content.hero.tagline}
           </p>
+          <HeroVideo
+            embedId={content.hero.videoEmbedId}
+            title={content.hero.videoTitle}
+          />
           <div className="mt-10 flex flex-wrap justify-center gap-4">
             <Link
               href="#apply"
