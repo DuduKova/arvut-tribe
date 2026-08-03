@@ -20,13 +20,22 @@ const HERO_MOBILE_IMAGE = "/tribe-guardians/hero-jungle-mobile.webp";
 function HeroVideo({ embedId, title }: { embedId: string; title: string }) {
   return (
     <div className="mt-8 w-full max-w-3xl overflow-hidden rounded-2xl border border-white/20 shadow-[0_20px_60px_rgba(0,0,0,0.45)]">
-      <div className="relative aspect-video w-full bg-black/40">
+      <div className="relative aspect-video w-full overflow-hidden bg-black/40">
         <iframe
-          src={`https://drive.google.com/file/d/${embedId}/preview`}
+          src={`https://www.youtube.com/embed/${embedId}?rel=0&modestbranding=1`}
           title={title}
           className="absolute inset-0 h-full w-full border-0"
-          allow="autoplay; encrypted-media; fullscreen"
+          allow="autoplay; encrypted-media; picture-in-picture"
           allowFullScreen
+        />
+        {/* Block YouTube pop-out and fullscreen controls */}
+        <div
+          className="pointer-events-auto absolute inset-y-0 end-0 z-10 w-16 bg-transparent"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-auto absolute end-0 bottom-0 z-10 h-14 w-24 bg-transparent"
+          aria-hidden="true"
         />
       </div>
     </div>
