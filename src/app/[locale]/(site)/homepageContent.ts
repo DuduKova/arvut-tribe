@@ -139,9 +139,9 @@ export const homepageContent: Record<SupportedLocale, HomepageContent> = {
     },
     announcement: {
       badge: "מיונים פתוחים עכשיו",
-      departure: "המסע הקרוב יוצא לפרו: 15 לנובמבר 2026",
+      departure: "המסע הקרוב יוצא לפרו",
       availability: "מספר המקומות מוגבל",
-      cta: "הגישו מועמדות",
+      cta: "למידע, הרשמה ומועדי המסע השאירו פרטים",
       donateCta: "תמכו במסע",
     },
     crisis: {
@@ -412,9 +412,9 @@ export const homepageContent: Record<SupportedLocale, HomepageContent> = {
     },
     announcement: {
       badge: "Applications Now Open",
-      departure: "The next journey departs for Peru: November 15, 2026",
+      departure: "The next journey departs for Peru",
       availability: "Space is limited",
-      cta: "Apply Now",
+      cta: "For information, registration, and journey dates, leave your details",
       donateCta: "Support the Journey",
     },
     crisis: {
