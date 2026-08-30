@@ -125,7 +125,7 @@ export const homepageContent: Record<SupportedLocale, HomepageContent> = {
   he: {
     hero: {
       imageAlt: "לוחם עומד ביער האמזונס",
-      videoEmbedId: "1wYPhX2GD4W9ZbjYyVkraf4VAZJQv9rMg",
+      videoEmbedId: "4ySr2RNSBnY",
       videoTitle: "סרטון שומרי השבט",
       eyebrow: "קליני · חדשני · קהילתי",
       title: "שומרי השבט",
@@ -139,9 +139,9 @@ export const homepageContent: Record<SupportedLocale, HomepageContent> = {
     },
     announcement: {
       badge: "מיונים פתוחים עכשיו",
-      departure: "המסע הקרוב יוצא לפרו: 15 לנובמבר 2026",
+      departure: "המסע הקרוב יוצא לפרו",
       availability: "מספר המקומות מוגבל",
-      cta: "הגישו מועמדות",
+      cta: "למידע, הרשמה ומועדי המסע השאירו פרטים",
       donateCta: "תמכו במסע",
     },
     crisis: {
@@ -395,7 +395,7 @@ export const homepageContent: Record<SupportedLocale, HomepageContent> = {
   en: {
     hero: {
       imageAlt: "Soldier standing in the Amazon rainforest",
-      videoEmbedId: "1xy3f9Rcni0O-4cwVK6jHF4y8CRnTUITJ",
+      videoEmbedId: "SDzvwNXeO3k",
       videoTitle: "Tribe Guardians video",
       eyebrow: "Clinical · Innovative · Community-Based",
       title: "Tribe Guardians",
@@ -412,9 +412,9 @@ export const homepageContent: Record<SupportedLocale, HomepageContent> = {
     },
     announcement: {
       badge: "Applications Now Open",
-      departure: "The next journey departs for Peru: November 15, 2026",
+      departure: "The next journey departs for Peru",
       availability: "Space is limited",
-      cta: "Apply Now",
+      cta: "For information, registration, and journey dates, leave your details",
       donateCta: "Support the Journey",
     },
     crisis: {
