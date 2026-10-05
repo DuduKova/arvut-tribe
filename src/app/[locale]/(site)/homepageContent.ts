@@ -49,8 +49,6 @@ type ContentCard = {
 type HomepageContent = {
   hero: {
     imageAlt: string;
-    videoEmbedId: string;
-    videoTitle: string;
     eyebrow: string;
     title: string;
     subtitleLines: string[];
@@ -125,8 +123,6 @@ export const homepageContent: Record<SupportedLocale, HomepageContent> = {
   he: {
     hero: {
       imageAlt: "לוחם עומד ביער האמזונס",
-      videoEmbedId: "4ySr2RNSBnY",
-      videoTitle: "סרטון שומרי השבט",
       eyebrow: "קליני · חדשני · קהילתי",
       title: "שומרי השבט",
       subtitleLines: ["ריפוי פוסט-טראומה לחיילים וחיילות", "נפגעי הלחימה"],
@@ -395,8 +391,6 @@ export const homepageContent: Record<SupportedLocale, HomepageContent> = {
   en: {
     hero: {
       imageAlt: "Soldier standing in the Amazon rainforest",
-      videoEmbedId: "SDzvwNXeO3k",
-      videoTitle: "Tribe Guardians video",
       eyebrow: "Clinical · Innovative · Community-Based",
       title: "Tribe Guardians",
       subtitleLines: [
